@@ -7,16 +7,16 @@
 ![preview]
 
 ## Header
-![new-session]
+![header]
 
 ## Chart Dashboard
 ![notes]
 
 ## Data Manager
-![notebooks]
+![data_manager]
 
 ##Chart Types
-![notebook-form]
+![chart_types]
 
 ## Query Dashboard
 ![query_dashboard]
