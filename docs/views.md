@@ -1,7 +1,7 @@
 # View Wireframes
 
 ## App
-![new-user]
+![app]
 
 ## Preview/Landing Page
 ![preview]
