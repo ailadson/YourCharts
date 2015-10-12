@@ -17,13 +17,13 @@ html, body, #app, .main{
 .data-manager{
   height: 100%;
   overflow-y: scroll;
-  background-color: #eee;
+  background-color: #ccc;
   float: left;
   width: 35%;
 }
 
 .chart-viewer{
-  background-color: #bbb;
+  background-color: #555;
   height: 100%;
   width: 65%;
   float: right;
@@ -31,7 +31,52 @@ html, body, #app, .main{
 
 .chart{
   margin: auto;
-  margin-top: 1em;
-  box-shadow: 0 0 5px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 50px;
   background-color: white;
+}
+
+.chart-metrics{
+  border: 1px solid black;
+  width: 80%;
+  background-color: #eee;
+  box-shadow: 0 0 15px;
+  margin: 5px auto;
+  border-radius: 3px;
+  padding: 20px;
+}
+
+.chart-metrics-header{
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.chart-metric-input{
+  font-size: 1em;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.chart-metric-input input{
+  padding: .25em;
+  font-size: .75em;
+  color: #111;
+}
+
+//to static. change
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
 }

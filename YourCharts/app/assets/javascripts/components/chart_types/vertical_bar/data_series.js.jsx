@@ -42,27 +42,56 @@
       this.setState(ChartMetricsStore.all());
     },
 
+    componentDidUpdate: function(){
+      var yAxis = d3.svg.axis()
+      .scale(this.yScale)
+      .orient("left");
+
+      var xAxis = d3.svg.axis()
+        .scale(this.xScale)
+        .orient("bottom");
+
+      var xNode = React.findDOMNode(this.refs.xAxis);
+      var yNode = React.findDOMNode(this.refs.yAxis);
+      d3.select(xNode).call(xAxis);
+      d3.select(yNode).call(yAxis);
+    },
+
+    setScales: function(){
+      this.yScale = d3.scale.linear()
+        .domain([0, this.state.Y_Maximum])
+        .range([this.props.Height, 0]);
+
+      this.xScale = d3.scale.ordinal()
+        .domain(d3.range(this.props.data.length))
+        .rangeRoundBands([0, this.props.Width], this.state.Bar_Padding);
+    },
+
     render: function(){
       var props = this.props;
 
-      var yScale = d3.scale.linear()
-        .domain([0, this.state.Y_Maximum])
-        .range([0, this.props.Height]);
-
-      var xScale = d3.scale.ordinal()
-        .domain(d3.range(this.props.data.length))
-        .rangeRoundBands([0, this.props.Width], this.state.Bar_Padding);
+      this.setScales();
 
       var bars = this.props.data.map(function(point, i){
         return(
-          <Components.Bar height={yScale(point)} width={xScale.rangeBand()}
-               offset={xScale(i)} avalableHeight={props.Height}
-               color={this.state.Color} key={i} />
+          <Components.Bar
+            height={props.Height - this.yScale(point)}
+            width={this.xScale.rangeBand()}
+            offset={this.xScale(i)}
+            avalableHeight={props.Height}
+            color={this.state.Color}
+            key={i} />
         );
       }.bind(this));
 
       return (
-        <g>{bars}</g>
+        <g>
+          <g transform={"translate("+this.state.MarginLeft+","+this.state.MarginTop+")"}>
+            {bars}
+            <g className="x axis" transform={"translate(0,"+ props.Height +")"} ref="xAxis"></g>
+            <g className="y axis" ref="yAxis"></g>
+          </g>
+        </g>
       );
     }
   });

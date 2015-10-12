@@ -35,7 +35,9 @@
         if(this.state.hasOwnProperty(m)){
           inputs.push(
             <div className="chart-metric-input">
-              {m+": "}<input type="text" name={m} onChange={this.changeMetric} value={this.state[m] }/>
+              {m}
+              <br/>
+              <input type="text" name={m} onChange={this.changeMetric} value={this.state[m] }/>
             </div>
           );
         }
@@ -46,6 +48,7 @@
     render: function(){
       return(
         <div className="chart-metrics">
+          <header className="chart-metrics-header">Metrics</header>
           {this.inputObjects()}
         </div>
       );

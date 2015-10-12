@@ -2,38 +2,22 @@
 
 ## Rails
 ### Models
-* Notebook
-* Tag
-* Tagging
+* Shares
 
 ### Controllers
-* Api::NotebooksController (create, destroy, index, show, update)
+* Api::ShareController (create, destroy)
 
 ### Views
-* notebooks/index.json.jbuilder
-* notebooks/show.json.jbuilder
-* tags/show.json.jbuilder
 
 ## Flux
 ### Views (React Components)
-* NotebooksIndex
-  - NotebookIndexItem
-* NotebookForm
-* SearchIndex
+* Share Chart
 
 ### Stores
-* Notebook
+* User Charts (modification. hold both user-created and shared charts)
 
 ### Actions
-* ApiActions.receiveAllNotebooks
-* ApiActions.receiveSingleNotebook
-* ApiActions.deleteNotebook
+* UserChartsActions.share(chart, with)
 
 ### ApiUtil
-* ApiUtil.fetchAllNotebooks
-* ApiUtil.fetchSingleNotebook
-* ApiUtil.createNotebook
-* ApiUtil.editNotebook
-* ApiUtil.destroyNotebook
-
-## Gems/Libraries
+* ApiUtil.shareChart(chart, with)

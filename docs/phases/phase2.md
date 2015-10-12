@@ -22,7 +22,7 @@
 * App
   * Chart Dashboard
     * Data Manager
-      * Share Chart
+      * Chart Buttons
   * Profile
     * Profile Side Bar
     * Yours Charts
