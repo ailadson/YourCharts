@@ -46,7 +46,7 @@ data sources. To make this happen, I will create web apis for those resources.
 
 [Details][phase-two]
 
-### Phase 3: Chart Sharing (1 days)
+### Phase 3: Chart Sharing (1 day)
 
 In Phase 3, I will implement a chart sharing feature what will allow logged in users
 to share their chart with any other user. I will have to create a Share resource
