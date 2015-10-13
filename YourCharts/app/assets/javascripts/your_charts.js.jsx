@@ -1,4 +1,5 @@
 /* global React */
+
 $(function(){
   var root = document.getElementById("app");
   var Route = ReactRouter.Route;

@@ -8,38 +8,28 @@
     window.Components.DataSeries =   window.Components.DataSeries || {};
 
   window.Components.DataSeries.VerticalBar = React.createClass({
+    mixins: [Components.DataSeriesMixin],
+    
     getInitialState: function(){
       return ChartMetricsStore.all();
     },
 
     defaultMetrics: function(){
-      var metrics = $.extend({}, this.props, {
+      var displayMetrics = this.props.displayMetrics;
+
+      var metrics = $.extend({}, {
+        Color: displayMetrics.color,
+        Height: displayMetrics.height,
+        Width: displayMetrics.width,
         Y_Maximum: d3.max(this.props.data),
-        Bar_Padding: 0.05
+        Bar_Padding: 0.05,
+        Margin_Left: displayMetrics.margin.left,
+        Margin_Right: displayMetrics.margin.right,
+        Margin_Top: displayMetrics.margin.top,
+        Margin_Bottom: displayMetrics.margin.bottom
       });
 
-      delete metrics.data;
-
       return metrics;
-    },
-
-    componentWillMount: function(){
-      ChartMetricsActions.reset(this.defaultMetrics());
-      this._updateMetrics();
-    },
-
-    componentDidMount: function(){
-      ChartMetricsActions.reset(this.defaultMetrics());
-      this._updateMetrics();
-      ChartMetricsStore.addChangeHandler(this._updateMetrics);
-    },
-
-    componentWillUnmount: function(){
-      ChartMetricsStore.removeChangeHandler(this._updateMetrics);
-    },
-
-    _updateMetrics: function(){
-      this.setState(ChartMetricsStore.all());
     },
 
     componentDidUpdate: function(){
@@ -60,25 +50,23 @@
     setScales: function(){
       this.yScale = d3.scale.linear()
         .domain([0, this.state.Y_Maximum])
-        .range([this.props.Height, 0]);
+        .range([this.state.Height, 0]);
 
       this.xScale = d3.scale.ordinal()
         .domain(d3.range(this.props.data.length))
-        .rangeRoundBands([0, this.props.Width], this.state.Bar_Padding);
+        .rangeRoundBands([0, this.state.Width], this.state.Bar_Padding);
     },
 
     render: function(){
-      var props = this.props;
-
       this.setScales();
 
       var bars = this.props.data.map(function(point, i){
         return(
           <Components.Bar
-            height={props.Height - this.yScale(point)}
+            height={this.state.Height - this.yScale(point)}
             width={this.xScale.rangeBand()}
             offset={this.xScale(i)}
-            avalableHeight={props.Height}
+            avalableHeight={this.state.Height}
             color={this.state.Color}
             key={i} />
         );
@@ -86,9 +74,9 @@
 
       return (
         <g>
-          <g transform={"translate("+this.state.MarginLeft+","+this.state.MarginTop+")"}>
+          <g transform={"translate("+this.state.Margin_Left+","+this.state.Margin_Top+")"}>
             {bars}
-            <g className="x axis" transform={"translate(0,"+ props.Height +")"} ref="xAxis"></g>
+            <g className="x axis" transform={"translate(0,"+ this.state.Height +")"} ref="xAxis"></g>
             <g className="y axis" ref="yAxis"></g>
           </g>
         </g>

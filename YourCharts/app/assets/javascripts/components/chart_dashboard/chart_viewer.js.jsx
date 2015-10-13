@@ -35,10 +35,10 @@
     _updateSize: function(){
       var margin = {};
 
-      margin.top = parseInt(ChartMetricsStore.get("MarginTop"));
-      margin.bottom = parseInt(ChartMetricsStore.get("MarginBottom"));
-      margin.left = parseInt(ChartMetricsStore.get("MarginLeft"));
-      margin.right = parseInt(ChartMetricsStore.get("MarginRight"));
+      margin.top = parseInt(ChartMetricsStore.get("Margin_Top"));
+      margin.bottom = parseInt(ChartMetricsStore.get("Margin_Bottom"));
+      margin.left = parseInt(ChartMetricsStore.get("Margin_Left"));
+      margin.right = parseInt(ChartMetricsStore.get("Margin_Right"));
 
       this.setState({
         width: parseInt(ChartMetricsStore.get("Width")),
@@ -50,20 +50,19 @@
     render: function(){
 
       var DataSeries = Components.DataSeries[this.props.chartType];
-      var margin = this.state.margin;
+      var displayMetrics = {
+        color: this.props.color,
+        height: this.state.height,
+        width: this.state.width,
+        margin: this.state.margin
+      };
 
       return(
         <div className="chart-viewer">
-          <Components.Chart width={this.state.width + margin.left + margin.right}
-                            height={this.state.height + margin.top + margin.bottom}>
+          <Components.Chart width={this.state.width + this.state.margin.left + this.state.margin.right}
+                            height={this.state.height + this.state.margin.top + this.state.margin.bottom}>
             <DataSeries data={this.props.data}
-                        Width={this.state.width}
-                        Height={this.state.height}
-                        Color={this.props.color}
-                        MarginTop={margin.top}
-                        MarginBottom={margin.bottom}
-                        MarginLeft={margin.left}
-                        MarginRight={margin.right} />
+                        displayMetrics={displayMetrics} />
           </Components.Chart>
         </div>
       );
