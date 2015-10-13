@@ -9,7 +9,7 @@
 
   window.Components.DataSeries.VerticalBar = React.createClass({
     mixins: [Components.DataSeriesMixin],
-    
+
     getInitialState: function(){
       return ChartMetricsStore.all();
     },
@@ -18,15 +18,17 @@
       var displayMetrics = this.props.displayMetrics;
 
       var metrics = $.extend({}, {
-        Color: displayMetrics.color,
-        Height: displayMetrics.height,
-        Width: displayMetrics.width,
-        Y_Maximum: d3.max(this.props.data),
-        Bar_Padding: 0.05,
-        Margin_Left: displayMetrics.margin.left,
-        Margin_Right: displayMetrics.margin.right,
-        Margin_Top: displayMetrics.margin.top,
-        Margin_Bottom: displayMetrics.margin.bottom
+        display: {
+          Color: displayMetrics.color,
+          Height: displayMetrics.height,
+          Width: displayMetrics.width,
+          Y_Maximum: d3.max(this.props.data),
+          Bar_Padding: 0.05,
+          Margin_Left: displayMetrics.margin.left,
+          Margin_Right: displayMetrics.margin.right,
+          Margin_Top: displayMetrics.margin.top,
+          Margin_Bottom: displayMetrics.margin.bottom
+        }
       });
 
       return metrics;
@@ -49,12 +51,12 @@
 
     setScales: function(){
       this.yScale = d3.scale.linear()
-        .domain([0, this.state.Y_Maximum])
-        .range([this.state.Height, 0]);
+        .domain([0, this.state.display.Y_Maximum])
+        .range([this.state.display.Height, 0]);
 
       this.xScale = d3.scale.ordinal()
         .domain(d3.range(this.props.data.length))
-        .rangeRoundBands([0, this.state.Width], this.state.Bar_Padding);
+        .rangeRoundBands([0, this.state.display.Width], this.state.display.Bar_Padding);
     },
 
     render: function(){
@@ -63,20 +65,20 @@
       var bars = this.props.data.map(function(point, i){
         return(
           <Components.Bar
-            height={this.state.Height - this.yScale(point)}
+            height={this.state.display.Height - this.yScale(point)}
             width={this.xScale.rangeBand()}
             offset={this.xScale(i)}
-            avalableHeight={this.state.Height}
-            color={this.state.Color}
+            avalableHeight={this.state.display.Height}
+            color={this.state.display.Color}
             key={i} />
         );
       }.bind(this));
 
       return (
         <g>
-          <g transform={"translate("+this.state.Margin_Left+","+this.state.Margin_Top+")"}>
+          <g transform={"translate("+this.state.display.Margin_Left+","+this.state.display.Margin_Top+")"}>
             {bars}
-            <g className="x axis" transform={"translate(0,"+ this.state.Height +")"} ref="xAxis"></g>
+            <g className="x axis" transform={"translate(0,"+ this.state.display.Height +")"} ref="xAxis"></g>
             <g className="y axis" ref="yAxis"></g>
           </g>
         </g>

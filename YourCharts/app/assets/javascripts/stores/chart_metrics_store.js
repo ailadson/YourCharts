@@ -10,13 +10,14 @@
   var _metrics = {};
 
 
-  var update = function(data){
-    _metrics[data.metric] = data.value;
+  var updateDisplay = function(data){
+    _metrics.display[data.metric] = data.value;
     ChartMetricsStore.emit(CHANGE);
   };
 
   var reset = function(metrics){
     _metrics = metrics;
+    ChartMetricsStore.emit(CHANGE);
   };
 
   var ChartMetricsStore = window.ChartMetricsStore = $.extend({}, EventEmitter.prototype, {
@@ -31,9 +32,9 @@
     },
 
     get: function(metric){
-      for(var m in _metrics){
-        if(_metrics.hasOwnProperty(m) && m === metric){
-          return _metrics[m];
+      for(var m in _metrics.display){
+        if(_metrics.display.hasOwnProperty(m) && m === metric){
+          return _metrics.display[m];
         }
       }
     },
@@ -48,8 +49,8 @@
 
     dispatchId: AppDispatcher.register(function(action){
       switch(action.actionType){
-        case ChartMetricsConstants.UPDATE:
-          update(action.payload);
+        case ChartMetricsConstants.UPDATEDISPLAY:
+          updateDisplay(action.payload);
           break;
         case ChartMetricsConstants.RESET:
           reset(action.payload);

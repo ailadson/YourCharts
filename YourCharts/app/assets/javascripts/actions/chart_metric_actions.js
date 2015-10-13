@@ -2,9 +2,9 @@
 /* global ChartMetricsConstants */
 
 var ChartMetricsActions = {
-  update: function(metric, value){
+  updateDisplay: function(metric, value){
     AppDispatcher.dispatch({
-      actionType: ChartMetricsConstants.UPDATE,
+      actionType: ChartMetricsConstants.UPDATEDISPLAY,
       payload: { metric: metric, value: value}
     });
   },
