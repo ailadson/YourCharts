@@ -9,8 +9,8 @@
 ### Controllers
 * SessionController (new, create, destroy)
 * UsersController (new, create)
-* Api::DataSourcesController (create, destroy)
-* Api::ChartMetricsController (create, destroy)
+* Api::DataSourcesController (index, create, destroy)
+* Api::ChartMetricsController (index, create, destroy)
 
 ### Views
 * session/new.html.erb
