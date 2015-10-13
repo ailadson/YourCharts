@@ -15,19 +15,24 @@
     },
 
     defaultMetrics: function(){
-      var displayMetrics = this.props.displayMetrics;
+      var defaultMetrics = this.props.defaultMetrics;
 
       var metrics = $.extend({}, {
         display: {
-          Color: displayMetrics.color,
-          Height: displayMetrics.height,
-          Width: displayMetrics.width,
-          Y_Maximum: d3.max(this.props.data),
+          Color: defaultMetrics.color,
+          Height: defaultMetrics.height,
+          Width: defaultMetrics.width,
+          Y_Maximum: 500,//d3.max(this.props.data),
           Bar_Padding: 0.05,
-          Margin_Left: displayMetrics.margin.left,
-          Margin_Right: displayMetrics.margin.right,
-          Margin_Top: displayMetrics.margin.top,
-          Margin_Bottom: displayMetrics.margin.bottom
+          Margin_Left: defaultMetrics.margin.left,
+          Margin_Right: defaultMetrics.margin.right,
+          Margin_Top: defaultMetrics.margin.top,
+          Margin_Bottom: defaultMetrics.margin.bottom
+        },
+
+        data: {
+          X_Metric: "letter",
+          Y_Metric: "frequency"
         }
       });
 
@@ -51,34 +56,49 @@
 
     setScales: function(){
       this.yScale = d3.scale.linear()
-        .domain([0, this.state.display.Y_Maximum])
-        .range([this.state.display.Height, 0]);
+        .range([this.props.metrics.display.Height, 0])
+        .domain([0, this.props.metrics.display.Y_Maximum]);
+
+      var xMetric;
+      if(this.props.metrics.data.X_Metric){
+        xMetric = this.props.data.map(function(d) { return d[this.props.metrics.data.X_Metric]; }.bind(this));
+      } else {
+        xMetric = d3.range(this.props.data.length);
+      }
 
       this.xScale = d3.scale.ordinal()
-        .domain(d3.range(this.props.data.length))
-        .rangeRoundBands([0, this.state.display.Width], this.state.display.Bar_Padding);
+        .rangeRoundBands([0, this.props.metrics.display.Width], this.props.metrics.display.Bar_Padding)
+        .domain(xMetric);
     },
 
     render: function(){
+      if($.isEmptyObject(this.props.metrics)){
+        return(
+          <g></g>
+        );
+      }
+
       this.setScales();
 
-      var bars = this.props.data.map(function(point, i){
+      var bars = this.props.data.map(function(d, i){
+        var xMetric = (this.props.metrics.data.X_Metric) ? d[this.props.metrics.data.X_Metric] : i;
+        // console.log(this.xScale(xMetric))
         return(
           <Components.Bar
-            height={this.state.display.Height - this.yScale(point)}
+            height={this.props.metrics.display.Height - this.yScale(d[this.props.metrics.data.Y_Metric])}
             width={this.xScale.rangeBand()}
-            offset={this.xScale(i)}
-            avalableHeight={this.state.display.Height}
-            color={this.state.display.Color}
+            offset={this.xScale(xMetric)}
+            avalableHeight={this.props.metrics.display.Height}
+            color={this.props.metrics.display.Color}
             key={i} />
         );
       }.bind(this));
 
       return (
         <g>
-          <g transform={"translate("+this.state.display.Margin_Left+","+this.state.display.Margin_Top+")"}>
+          <g transform={"translate("+this.props.metrics.display.Margin_Left+","+this.props.metrics.display.Margin_Top+")"}>
             {bars}
-            <g className="x axis" transform={"translate(0,"+ this.state.display.Height +")"} ref="xAxis"></g>
+            <g className="x axis" transform={"translate(0,"+ this.props.metrics.display.Height +")"} ref="xAxis"></g>
             <g className="y axis" ref="yAxis"></g>
           </g>
         </g>

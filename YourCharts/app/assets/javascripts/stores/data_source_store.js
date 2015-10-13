@@ -21,6 +21,10 @@
       return _selectedDataSource && _selectedDataSource.name;
     },
 
+    selectedData: function(){
+      return _selectedDataSource && _selectedDataSource.data;
+    },
+
     allNames: function(){
       return _dataSources.map(function(source){ return source.name; });
     },

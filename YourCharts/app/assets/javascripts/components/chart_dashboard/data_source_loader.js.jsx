@@ -1,3 +1,7 @@
+/* global React */
+/* global DataSourceStore */
+/* global DataSourceActions */
+
 (function() {
   'use strict';
 

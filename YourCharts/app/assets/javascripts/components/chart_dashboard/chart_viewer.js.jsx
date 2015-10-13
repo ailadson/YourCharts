@@ -1,4 +1,6 @@
 /* global React */
+/* global Components */
+/* global ChartMetricsStore */
 
 (function() {
   'use strict';
@@ -7,20 +9,12 @@
 
   window.Components.ChartViewer = React.createClass({
     getInitialState: function(){
-      var top = 20,
-          right = 30,
-          bottom = 30,
-          left = 40;
+      var margin = {top: 20, right: 30, bottom: 30, left: 40};
 
       return {
-        width: 500 - left - right,
-        height: 500 - top - bottom,
-        margin: {
-          top: top,
-          right: right,
-          bottom: bottom,
-          left: left
-        }
+        width: 500 - margin.left - margin.right,
+        height: 500 - margin.top - margin.bottom,
+        margin: margin
       };
     },
 
@@ -49,8 +43,14 @@
 
     render: function(){
 
+      if(!this.props.data){
+        return(
+          <div>Please Select A Data Source</div>
+        );
+      }
+
       var DataSeries = Components.DataSeries[this.props.chartType];
-      var displayMetrics = {
+      var defaultMetrics = {
         color: this.props.color,
         height: this.state.height,
         width: this.state.width,
@@ -62,7 +62,8 @@
           <Components.Chart width={this.state.width + this.state.margin.left + this.state.margin.right}
                             height={this.state.height + this.state.margin.top + this.state.margin.bottom}>
             <DataSeries data={this.props.data}
-                        displayMetrics={displayMetrics} />
+                        metrics={this.props.metrics}
+                        defaultMetrics={defaultMetrics} />
           </Components.Chart>
         </div>
       );

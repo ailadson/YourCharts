@@ -6,22 +6,15 @@
 
   window.Components.DataSeriesMixin = {
     componentWillMount: function(){
-      ChartMetricsActions.reset(this.defaultMetrics());
-      this._updateMetrics();
+      this.attemptReset();
     },
 
-    componentDidMount: function(){
-      ChartMetricsActions.reset(this.defaultMetrics());
-      this._updateMetrics();
-      ChartMetricsStore.addChangeHandler(this._updateMetrics);
-    },
-
-    componentWillUnmount: function(){
-      ChartMetricsStore.removeChangeHandler(this._updateMetrics);
-    },
-
-    _updateMetrics: function(){
-      this.setState(ChartMetricsStore.all());
+    attemptReset: function(){
+      if(AppDispatcher.isDispatching()){
+        setTimeout(this.attemptReset.bind(this), 100);
+      }else{
+        ChartMetricsActions.reset(this.defaultMetrics());
+      }
     }
   };
 }());
