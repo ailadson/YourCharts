@@ -1,4 +1,5 @@
 /* global React */
+/* global Components */
 /* global d3 */
 
 (function() {
@@ -18,25 +19,38 @@
       var defaultMetrics = this.props.defaultMetrics;
 
       var metrics = $.extend({}, {
+        data: {
+          X_Metric: "letter",
+          Y_Metric: "frequency"
+        },
+
         display: {
           Color: defaultMetrics.color,
           Height: defaultMetrics.height,
           Width: defaultMetrics.width,
-          Y_Maximum: 500,//d3.max(this.props.data),
+          Y_Maximum: this.computeDefaultYMax(),
           Bar_Padding: 0.05,
           Margin_Left: defaultMetrics.margin.left,
           Margin_Right: defaultMetrics.margin.right,
           Margin_Top: defaultMetrics.margin.top,
           Margin_Bottom: defaultMetrics.margin.bottom
-        },
-
-        data: {
-          X_Metric: "letter",
-          Y_Metric: "frequency"
         }
       });
 
       return metrics;
+    },
+
+    computeDefaultYMax: function(){
+      var max = 0;
+      this.props.data.forEach(function(d){
+        for(var prop in d){
+          if(d.hasOwnProperty(prop)){
+            var dMax = parseFloat(d[prop]);
+            if(dMax > max){ max = dMax; }
+          }
+        }
+      });
+      return max;
     },
 
     componentDidUpdate: function(){
@@ -71,6 +85,41 @@
         .domain(xMetric);
     },
 
+    createBars: function(){
+      var X_Metric = this.props.metrics.data.X_Metric;
+      var Y_Metric = this.props.metrics.data.Y_Metric;
+      var yAvgValues = {};
+
+      var bars = this.props.data.map(function(d, i){
+        var xMetric = X_Metric ? d[X_Metric] : i;
+
+        //find the avergae value of for the given metrics, instead of just showing the last value
+        var yAvgValue = yAvgValues[xMetric] || (function(){
+          var sum = 0, count = 0;
+          this.props.data.forEach(function(el){
+            if(el[X_Metric] === xMetric){
+              sum += parseFloat(el[Y_Metric]);
+              count += 1;
+            }
+          });
+          yAvgValues[xMetric] = sum/count;
+          return sum/count;
+        }.bind(this)());
+
+        return(
+          <Components.Bar
+            height={this.props.metrics.display.Height - this.yScale(yAvgValue)}
+            width={this.xScale.rangeBand()}
+            offset={this.xScale(xMetric)}
+            avalableHeight={this.props.metrics.display.Height}
+            color={this.props.metrics.display.Color}
+            key={i} />
+        );
+      }.bind(this));
+
+      return bars;
+    },
+
     render: function(){
       if($.isEmptyObject(this.props.metrics)){
         return(
@@ -80,24 +129,10 @@
 
       this.setScales();
 
-      var bars = this.props.data.map(function(d, i){
-        var xMetric = (this.props.metrics.data.X_Metric) ? d[this.props.metrics.data.X_Metric] : i;
-        // console.log(this.xScale(xMetric))
-        return(
-          <Components.Bar
-            height={this.props.metrics.display.Height - this.yScale(d[this.props.metrics.data.Y_Metric])}
-            width={this.xScale.rangeBand()}
-            offset={this.xScale(xMetric)}
-            avalableHeight={this.props.metrics.display.Height}
-            color={this.props.metrics.display.Color}
-            key={i} />
-        );
-      }.bind(this));
-
       return (
         <g>
           <g transform={"translate("+this.props.metrics.display.Margin_Left+","+this.props.metrics.display.Margin_Top+")"}>
-            {bars}
+            {this.createBars()}
             <g className="x axis" transform={"translate(0,"+ this.props.metrics.display.Height +")"} ref="xAxis"></g>
             <g className="y axis" ref="yAxis"></g>
           </g>
