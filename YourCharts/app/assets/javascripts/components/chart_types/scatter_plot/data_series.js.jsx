@@ -8,24 +8,29 @@
   window.Components = window.Components || {};
     window.Components.DataSeries =   window.Components.DataSeries || {};
 
-  window.Components.DataSeries.VerticalBar = React.createClass({
+  window.Components.DataSeries.ScatterPlot = React.createClass({
     mixins: [Components.DataSeriesMixin],
 
     defaultMetrics: function(){
       var defaultMetrics = this.props.defaultMetrics;
+      var maxValue = this.computeDefaultMax();
+      var minValue = this.computeDefaultMin();
 
       var metrics = $.extend({}, {
         data: {
-          X_Metric: "letter",
-          Y_Metric: "frequency"
+          X_Metric: "",
+          Y_Metric: "",
+          Color_Metric: ""
         },
 
         display: {
-          Color: defaultMetrics.color,
           Height: defaultMetrics.height,
           Width: defaultMetrics.width,
-          Y_Maximum: this.computeDefaultYMax(),
-          Bar_Padding: 0.05,
+          Dot_Radius: 3.5,
+          Y_Maximum: maxValue,
+          Y_Minimum: minValue,
+          X_Maximum: maxValue,
+          X_Minimum: minValue,
           Margin_Left: defaultMetrics.margin.left,
           Margin_Right: defaultMetrics.margin.right,
           Margin_Top: defaultMetrics.margin.top,
@@ -36,17 +41,29 @@
       return metrics;
     },
 
-    computeDefaultYMax: function(){
-      var max = 0;
+    computeDefault: function(cb){
+      var max;
       this.props.data.forEach(function(d){
         for(var prop in d){
           if(d.hasOwnProperty(prop)){
             var dMax = parseFloat(d[prop]);
-            if(dMax > max){ max = dMax; }
+            if(!max || cb(dMax,max)){ max = dMax; }
           }
         }
       });
       return max;
+    },
+
+    computeDefaultMax: function(){
+      return this.computeDefault(function(dMax, max){
+        return dMax > max;
+      });
+    },
+
+    computeDefaultMin: function(){
+      return this.computeDefault(function(dMin, min){
+        return dMin < min;
+      });
     },
 
     componentDidUpdate: function(){
@@ -65,55 +82,40 @@
     },
 
     setScales: function(){
+      var display = this.props.metrics.display;
+
+      this.xScale = d3.scale.linear()
+        .range([0, display.Width])
+        .domain([display.X_Minimum, display.X_Maximum]);
+
       this.yScale = d3.scale.linear()
         .range([this.props.metrics.display.Height, 0])
-        .domain([0, this.props.metrics.display.Y_Maximum]);
+        .domain([display.Y_Minimum, display.Y_Maximum]);
 
-      var xMetric;
-      if(this.props.metrics.data.X_Metric){
-        xMetric = this.props.data.map(function(d) { return d[this.props.metrics.data.X_Metric]; }.bind(this));
-      } else {
-        xMetric = d3.range(this.props.data.length);
-      }
-
-      this.xScale = d3.scale.ordinal()
-        .rangeRoundBands([0, this.props.metrics.display.Width], this.props.metrics.display.Bar_Padding)
-        .domain(xMetric);
+      this.colorScale = d3.scale.category10();
     },
 
-    createBars: function(){
+    createDots: function(){
       var X_Metric = this.props.metrics.data.X_Metric;
       var Y_Metric = this.props.metrics.data.Y_Metric;
-      var yAvgValues = {};
+      var Color_Metric = this.props.metrics.data.Color_Metric;
 
-      var bars = this.props.data.map(function(d, i){
+      var dots = this.props.data.map(function(d, i){
         var xMetric = X_Metric ? d[X_Metric] : i;
-
-        //find the avergae value of for the given metrics, instead of just showing the last value
-        var yAvgValue = yAvgValues[xMetric] || (function(){
-          var sum = 0, count = 0;
-          this.props.data.forEach(function(el){
-            if(el[X_Metric] === xMetric){
-              sum += parseFloat(el[Y_Metric]);
-              count += 1;
-            }
-          });
-          yAvgValues[xMetric] = sum/count;
-          return sum/count;
-        }.bind(this)());
+        var yMetric = Y_Metric ? d[Y_Metric] : i;
+        var colorMetric = Y_Metric ? d[Color_Metric] : i;
 
         return(
-          <Components.Bar
-            height={this.props.metrics.display.Height - this.yScale(yAvgValue)}
-            width={this.xScale.rangeBand()}
-            offset={this.xScale(xMetric)}
-            avalableHeight={this.props.metrics.display.Height}
-            color={this.props.metrics.display.Color}
+          <Components.Dot
+            r={this.props.metrics.display.Dot_Radius}
+            cy={this.yScale(yMetric)}
+            cx={this.xScale(xMetric)}
+            fill={this.colorScale(colorMetric)}
             key={i} />
         );
       }.bind(this));
 
-      return bars;
+      return dots;
     },
 
     render: function(){
@@ -128,9 +130,13 @@
       return (
         <g>
           <g transform={"translate("+this.props.metrics.display.Margin_Left+","+this.props.metrics.display.Margin_Top+")"}>
-            {this.createBars()}
-            <g className="x axis" transform={"translate(0,"+ this.props.metrics.display.Height +")"} ref="xAxis"></g>
-            <g className="y axis" ref="yAxis"></g>
+            {this.createDots()}
+            <g className="x axis"
+              transform={"translate(0,"+ this.props.metrics.display.Height +")"}
+              ref="xAxis"></g>
+
+            <g className="y axis"
+               ref="yAxis"></g>
           </g>
         </g>
       );

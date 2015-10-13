@@ -10,7 +10,7 @@
   window.Components.ChartDashboard = React.createClass({
     getInitialState: function(){
       return {
-        chartType: "VerticalBar",
+        chartType: "ScatterPlot",
         dataSource: DataSourceStore.selectedData(),
         metrics: ChartMetricsStore.all()
        };

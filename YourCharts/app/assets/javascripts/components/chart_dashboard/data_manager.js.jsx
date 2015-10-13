@@ -10,8 +10,8 @@
       return(
         <div className="data-manager">
           <Components.DataSourceLoader />
-          <Components.ChartMetrics metrics={this.props.metrics} />
           <Components.ChartTypes onClick={this.props.onChartTypeClick} />
+          <Components.ChartMetrics metrics={this.props.metrics} />
         </div>
       );
     }
