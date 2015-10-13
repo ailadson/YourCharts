@@ -25,24 +25,24 @@
       return _selectedDataSource && _selectedDataSource.data;
     },
 
-    allNames: function(){
-      return _dataSources.map(function(source){ return source.name; });
-    },
+    selectedMeasures: function(){
+      var measures = [];
 
-    metrics: function(){
-      var source = _selectedDataSource.data[0];
-      var m = [];
+      if(_selectedDataSource){
+        var source = _selectedDataSource.data[0];
 
-      for(var metric in source){
-        if(source.hasOwnProperty(metric)){
-          m.push({
-            metric: metric,
-            type: this.guessType(source[metric])
-          });
+        for(var key in source){
+          if(source.hasOwnProperty(key)){
+            measures.push(key);
+          }
         }
       }
 
-      return m;
+      return measures;
+    },
+
+    allNames: function(){
+      return _dataSources.map(function(source){ return source.name; });
     },
 
     guessType: function(val){

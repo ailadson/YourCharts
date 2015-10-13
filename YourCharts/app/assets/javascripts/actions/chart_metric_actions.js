@@ -9,6 +9,13 @@ var ChartMetricsActions = {
     });
   },
 
+  updateData: function(metric, value){
+    AppDispatcher.dispatch({
+      actionType: ChartMetricsConstants.UPDATEDATA,
+      payload: { metric: metric, value: value}
+    });
+  },
+
   reset: function(metrics){
     AppDispatcher.dispatch({
       actionType: ChartMetricsConstants.RESET,

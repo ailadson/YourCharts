@@ -8,61 +8,10 @@ html, body, #app, .main{
   padding: 0;
 }
 
-.chart-dashboard{
-  width: 100%;
-  height: 90%;
-  border: 1px solid black;
-}
-
-.data-manager{
-  height: 100%;
-  overflow-y: scroll;
-  background-color: #ccc;
-  float: left;
-  width: 35%;
-}
-
-.chart-viewer{
-  background-color: #555;
-  height: 100%;
-  width: 65%;
-  float: right;
-}
-
-.chart{
-  margin: auto;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  box-shadow: 0 0 50px;
-  background-color: white;
-}
-
-.chart-metrics{
-  border: 1px solid black;
-  width: 80%;
-  background-color: #eee;
-  box-shadow: 0 0 15px;
-  margin: 5px auto;
-  border-radius: 3px;
-  padding: 20px;
-}
-
-.chart-metrics-header{
-  font-size: 1.5em;
-  text-align: center;
-}
-
-.chart-metric-input{
-  font-size: 1em;
-  margin-bottom: 20px;
-  margin-left: 20px;
-}
-
-.chart-metric-input input{
-  padding: .25em;
-  font-size: .75em;
-  color: #111;
+.group:after{
+  content: "";
+  clear: both;
+  display: block;
 }
 
 //to static. change

@@ -1,4 +1,5 @@
 var ChartMetricsConstants = {
-  UPDATE: "chartmetricUPDATEDISPLAY",
-  RESET: "chartmetricRESET"
+  UPDATEDISPLAY: "chartmetricUPDATEDISPLAY",
+  RESET: "chartmetricRESET",
+  UPDATEDATA: "chartmetricUPDATEDATA"
 };

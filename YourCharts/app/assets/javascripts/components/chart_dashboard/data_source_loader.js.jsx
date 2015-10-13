@@ -88,7 +88,8 @@
       );
 
       return(
-        <div className="data-uploader">
+        <div className="data-uploader data-manager-panel">
+          <header>Data Source</header>
           <select onChange={this.handleChange}>{dataOptions}</select>
           {
             this.state.uploadingFile ?

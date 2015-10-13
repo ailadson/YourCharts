@@ -15,6 +15,11 @@
     ChartMetricsStore.emit(CHANGE);
   };
 
+  var updateData = function(data){
+    _metrics.data[data.metric] = data.value;
+    ChartMetricsStore.emit(CHANGE);
+  };
+
   var reset = function(metrics){
     _metrics = metrics;
     ChartMetricsStore.emit(CHANGE);
@@ -37,6 +42,12 @@
           return _metrics.display[m];
         }
       }
+
+      for(var met in _metrics.data){
+        if(_metrics.data.hasOwnProperty(m) && met === metric){
+          return _metrics.data[m];
+        }
+      }
     },
 
     addChangeHandler: function(cb){
@@ -51,6 +62,9 @@
       switch(action.actionType){
         case ChartMetricsConstants.UPDATEDISPLAY:
           updateDisplay(action.payload);
+          break;
+        case ChartMetricsConstants.UPDATEDATA:
+          updateData(action.payload);
           break;
         case ChartMetricsConstants.RESET:
           reset(action.payload);
