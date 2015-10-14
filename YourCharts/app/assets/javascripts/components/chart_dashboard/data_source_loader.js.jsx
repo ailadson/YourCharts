@@ -64,14 +64,16 @@
             break;
         }
 
+        debugger;
+
         if(dataObject){
           DataSourceActions.add({ name: name, data: dataObject }); //CHANGE TO CREATE
         }
 
-        this.setState({ uploadingFile: false });
       }.bind(this);
 
       reader.readAsText(file);
+      this.setState({ uploadingFile: false });
     },
 
     render: function(){

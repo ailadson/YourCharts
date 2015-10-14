@@ -8,6 +8,12 @@
   window.Components = window.Components || {};
 
   window.Components.ChartMetrics = React.createClass({
+    // componentWillMount: function(){
+    //   DataSourceStore.addChangeHandler(function(){
+    //     this.forceUpdate();
+    //   }.bind(this));
+    // },
+
     changeDisplayMetric: function(e){
       var metric = e.target.name;
       var value = e.target.type === "number" ? parseFloat(e.target.value) : e.target.value;
@@ -27,7 +33,7 @@
       for(var m in metrics ){
         if(metrics.hasOwnProperty(m)){
           inputs.push(
-            <div className="chart-display-metric-input">
+            <div  key={"display"+m} className="chart-display-metric-input">
               {m}
               <br/>
               <input type="text" name={m} onChange={this.changeDisplayMetric} value={metrics[m] }/>
@@ -49,16 +55,30 @@
 
       for(var m in metrics ){
         if(metrics.hasOwnProperty(m)){
+          var datetime = (m === "DateTime_Format");
+
           inputs.push(
-            <div className="chart-data-metric-input">
+            <div key={"data"+m} className="chart-data-metric-input">
               {m}
               <br/>
-              <select name={m} onChange={this.changeDataMetric}>
-                <option value={null}></option>
-                {
-                  measures.map(getOptions)
-                }
-              </select>
+              {
+                datetime ?
+                  <div>
+                    <a href="https://github.com/mbostock/d3/wiki/Time-Formatting"
+                       target="_blank">
+                      Formatting info.
+                    </a>
+                    <input name={m}
+                           onChange={this.changeDataMetric}/>
+                  </div>
+                :
+                  <select name={m} onChange={this.changeDataMetric}>
+                    <option value={null} defaultValue></option>
+                    {
+                      measures.map(getOptions)
+                    }
+                  </select>
+              }
             </div>
           );
         }

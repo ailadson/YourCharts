@@ -20,11 +20,11 @@
               <img src="imgs/scatter-plot-icon.png"></img>
             </li>
 
-            <li className="chart-types-item">
+            <li className="chart-types-item" onClick={this.props.onClick.bind(null,"PieChart")}>
               <img src="imgs/pie-chart-icon.png"></img>
             </li>
 
-            <li className="chart-types-item">
+            <li className="chart-types-item" onClick={this.props.onClick.bind(null,"LineGraph")}>
               <img src="imgs/line-chart-icon.png"></img>
             </li>
 

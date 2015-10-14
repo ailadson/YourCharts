@@ -11,7 +11,7 @@
   window.Components.ChartDashboard = React.createClass({
     getInitialState: function(){
       return {
-        chartType: "PieChart",
+        chartType: "LineGraph",
         dataSource: DataSourceStore.selectedData(),
         metrics: ChartMetricsStore.all()
        };

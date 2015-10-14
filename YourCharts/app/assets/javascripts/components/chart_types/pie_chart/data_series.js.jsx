@@ -78,7 +78,6 @@
       var data = this.pie(this.formattedData);
 
       var arcs = data.map(function(d, i){
-      console.log(d);
         return(
           <Components.Arc
             radius={this.props.metrics.display.Radius}
@@ -93,7 +92,10 @@
     },
 
     render: function(){
-      if($.isEmptyObject(this.props.metrics)){
+      if($.isEmptyObject(this.props.metrics) ||
+         !this.props.metrics.data.Group_By ||
+         !this.props.metrics.display.Radius ||
+         !this.props.metrics.data.Attribute){
         return(
           <g></g>
         );

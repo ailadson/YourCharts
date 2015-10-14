@@ -19,8 +19,6 @@
         .startAngle(this.props.d.startAngle)
         .endAngle(this.props.d.endAngle);
 
-      console.log(path());
-      // debugger;
       return(
         <g>
           <path fill={this.props.fill} d={path()} stroke={"#000"}/>

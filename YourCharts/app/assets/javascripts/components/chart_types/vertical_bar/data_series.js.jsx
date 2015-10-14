@@ -117,7 +117,9 @@
     },
 
     render: function(){
-      if($.isEmptyObject(this.props.metrics)){
+      if($.isEmptyObject(this.props.metrics) ||
+        !this.props.metrics.data.X_Metric ||
+        !this.props.metrics.data.Y_Metric){
         return(
           <g></g>
         );
