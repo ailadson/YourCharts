@@ -1,3 +1,4 @@
 var DataSourceConstants = {
-  ADD: "dataSourceADD"
+  ADD: "dataSourceADD",
+  SETSELECTED: "dataSourceSETSELECTED"
 };

@@ -16,9 +16,18 @@
     DataSourceStore.emit(CHANGE);
   };
 
+  var setSelected = function(name){
+    _selectedDataSource = DataSourceStore.find(name);
+    DataSourceStore.emit(CHANGE);
+  };
+
   var DataSourceStore = window.DataSourceStore = $.extend({}, EventEmitter.prototype, {
     selectedName: function(){
       return _selectedDataSource && _selectedDataSource.name;
+    },
+
+    find: function(name){
+      return _dataSources.find(function(source){ return source.name === name; });
     },
 
     selectedData: function(){
@@ -68,6 +77,9 @@
       switch(action.actionType){
         case DataSourceConstants.ADD:
           addSource(action.payload);
+          break;
+        case DataSourceConstants.SETSELECTED:
+          setSelected(action.payload);
           break;
       }
     })

@@ -37,6 +37,7 @@
           this.setState({ uploadingFile: true });
           break;
         default:
+          DataSourceActions.setSelected(e.target.value);
           this.setState({ uploadingFile: false });
           break;
       }
