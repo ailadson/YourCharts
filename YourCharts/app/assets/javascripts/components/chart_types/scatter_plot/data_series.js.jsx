@@ -95,6 +95,30 @@
       this.colorScale = d3.scale.category10();
     },
 
+    createLegend: function(){
+      var display = this.props.metrics.display;
+
+      var legend = this.colorScale.domain().map(function(d, i){
+        return(
+          <g key={i} transform={"translate(0," + i * 20 + ")"}>
+            <rect x={display.Width - 18}
+                  width={18}
+                  height={18}
+                  fill={this.colorScale(d)}>
+            </rect>
+            <text x={display.Width - 24}
+                  y={9}
+                  dy={".35em"}
+                  textAnchor={"end"}>
+                {d}
+            </text>
+          </g>
+        );
+      }.bind(this));
+
+      return legend;
+    },
+
     createDots: function(){
       var X_Metric = this.props.metrics.data.X_Metric;
       var Y_Metric = this.props.metrics.data.Y_Metric;
@@ -137,6 +161,8 @@
 
             <g className="y axis"
                ref="yAxis"></g>
+
+             {this.createLegend()}
           </g>
         </g>
       );
