@@ -14,10 +14,10 @@
 
     render: function(){
       var path = d3.svg.arc()
-        .innerRadius(this.props.innerRadius)
-        .outerRadius(this.props.outerRadius)
-        .startAngle(this.props.startAngle)
-        .endAngle(this.props.endAngle);
+        .innerRadius(0)
+        .outerRadius(this.props.radius)
+        .startAngle(this.props.d.startAngle)
+        .endAngle(this.props.d.endAngle);
 
       console.log(path());
       // debugger;

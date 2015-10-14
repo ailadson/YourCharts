@@ -16,8 +16,8 @@
 
       var metrics = $.extend({}, {
         data: {
-          Category: "age",
-          Metric: "population"
+          Group_By: "age",
+          Attribute: "population"
         },
 
         display: {
@@ -35,29 +35,56 @@
       return metrics;
     },
 
+    formatData: function(){
+      var dataMetrics = this.props.metrics.data;
+      var dataSums = {};
+      this.formattedData = [];
+
+      this.props.data.forEach(function(d){
+        var category = d[dataMetrics.Group_By];
+        var metric = parseFloat(d[dataMetrics.Attribute]);
+
+        if(metric !== metric){ metric = 1; } //check for NaN
+
+        if(dataSums[category]){
+          dataSums[category].m += metric;
+          dataSums[category].c += 1;
+        } else {
+          dataSums[category] = { m: metric, c: 1 };
+        }
+      }.bind(this));
+
+      for(var cat in dataSums){
+        if(dataSums.hasOwnProperty(cat)){
+          var d = {};
+          d[dataMetrics.Group_By] = cat;
+          d[dataMetrics.Attribute] = (dataSums[cat].m / dataSums[cat].c);
+
+          this.formattedData.push(d);
+        }
+      }
+    },
+
     setArcs: function(){
       this.pie = d3.layout.pie()
         .sort(null)
-        .value(function(d){ return d["population"]; });
+        .value(function(d){ return d[this.props.metrics.data.Attribute]; }.bind(this));
 
       this.color = d3.scale.ordinal()
         .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
     },
 
     createArcs: function(){
-      var data = this.pie(this.props.data);
+      var data = this.pie(this.formattedData);
 
       var arcs = data.map(function(d, i){
       console.log(d);
         return(
           <Components.Arc
-            outerRadius={this.props.metrics.display.Radius}
-            innerRadius={0}
+            radius={this.props.metrics.display.Radius}
             d={d}
-            startAngle={d.startAngle}
-            endAngle={d.endAngle}
-            fill={this.color(d.data[this.props.metrics.data.Category])}
-            text={d.data[this.props.metrics.data.Category]}
+            fill={this.color(d.data[this.props.metrics.data.Group_By])}
+            text={d.data[this.props.metrics.data.Group_By]}
             key={i} />
         );
       }.bind(this));
@@ -74,6 +101,7 @@
 
       var display = this.props.metrics.display;
 
+      this.formatData();
       this.setArcs();
 
       return (
