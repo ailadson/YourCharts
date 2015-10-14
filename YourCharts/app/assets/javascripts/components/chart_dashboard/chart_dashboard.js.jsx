@@ -1,6 +1,7 @@
 /* global React */
 /* global Components */
 /* global ChartMetricsStore */
+/* global DataSourceStore */
 
 (function() {
   'use strict';
@@ -10,7 +11,7 @@
   window.Components.ChartDashboard = React.createClass({
     getInitialState: function(){
       return {
-        chartType: "ScatterPlot",
+        chartType: "PieChart",
         dataSource: DataSourceStore.selectedData(),
         metrics: ChartMetricsStore.all()
        };

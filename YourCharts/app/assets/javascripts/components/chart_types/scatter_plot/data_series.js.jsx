@@ -155,14 +155,8 @@
         <g>
           <g transform={"translate("+this.props.metrics.display.Margin_Left+","+this.props.metrics.display.Margin_Top+")"}>
             {this.createDots()}
-            <g className="x axis"
-              transform={"translate(0,"+ this.props.metrics.display.Height +")"}
-              ref="xAxis"></g>
-
-            <g className="y axis"
-               ref="yAxis"></g>
-
-             {this.createLegend()}
+            {this.createAxis()}
+            {this.createLegend()}
           </g>
         </g>
       );

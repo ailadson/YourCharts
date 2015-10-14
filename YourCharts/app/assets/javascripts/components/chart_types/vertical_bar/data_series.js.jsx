@@ -16,8 +16,8 @@
 
       var metrics = $.extend({}, {
         data: {
-          X_Metric: "letter",
-          Y_Metric: "frequency"
+          X_Metric: "",
+          Y_Metric: ""
         },
 
         display: {
@@ -129,8 +129,7 @@
         <g>
           <g transform={"translate("+this.props.metrics.display.Margin_Left+","+this.props.metrics.display.Margin_Top+")"}>
             {this.createBars()}
-            <g className="x axis" transform={"translate(0,"+ this.props.metrics.display.Height +")"} ref="xAxis"></g>
-            <g className="y axis" ref="yAxis"></g>
+            {this.createAxis()}
           </g>
         </g>
       );
