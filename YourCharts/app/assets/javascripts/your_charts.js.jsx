@@ -1,28 +1,63 @@
 /* global React */
 
 $(function(){
-  var root = document.getElementById("app");
   var Route = ReactRouter.Route;
   var Router = ReactRouter.Router;
   var IndexRoute = ReactRouter.IndexRoute;
+
+  var AppNavBar = React.createClass({
+    render: function(){
+      return(
+        <nav><h2>Your Charts</h2></nav>
+      );
+    }
+  });
+
+  var GuestNavBar = React.createClass({
+    render: function(){
+      return(
+        <nav><h2>Login Your Charts</h2></nav>
+      );
+    }
+  });
 
   var App = React.createClass({
     render: function(){
       return (
         <div className="main">
-          <header><h2>Your Charts</h2></header>
-          { this.props.children }
+          { this.props.children.Header }
+          <div className="main-content">
+            { this.props.children.Content }
+          </div>
         </div>
       );
     }
   });
 
-  var routes = (
+  var appRoutes = (
     <Route path="/" component={App}>
-      <IndexRoute component={Components.PoductPreview}/>
-      <Route path="dashboard" component={Components.ChartDashboard}/>
+      <IndexRoute component={{Header: AppNavBar, Content: Components.ChartDashboard}}/>
     </Route>
   );
 
-  React.render(<Router>{routes}</Router>, root);
+  var guestRoutes = (
+    <Route path="/" component={App}>
+      <IndexRoute component={{Header: GuestNavBar, Content: Components.PoductPreview}}/>
+    </Route>
+  );
+
+
+  window.runApp = function(){
+    var root = document.getElementById("app");
+
+    React.render(<Router>{appRoutes}</Router>, root);
+  };
+
+  window.runGuest = function(){
+    var root = document.getElementById("app");
+
+    React.render(<Router>{guestRoutes}</Router>, root);
+  };
+
+
 });
