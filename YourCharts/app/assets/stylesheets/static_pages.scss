@@ -22,6 +22,42 @@ html, body, #app, .main{
   padding: 0;
 }
 
+.nav-bar{
+  background-color: #F0FFFF;
+}
+
+.nav-bar div{
+  width: 50%;
+  text-align: center;
+  font-size: 1.25em;
+  position: relative;
+  color: #000;
+  text-shadow: 1px 1px 15px #fff;
+  top: 50%;
+  transform: translateY(-50%);
+  float:left;
+}
+
+.nav-logged-in ul{
+  list-style: none;
+  float: right;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.nav-logged-in ul li{
+  float: left;
+  height: 100%;
+  border-left: 1px solid black;
+  padding: 0 10px;
+}
+
+.nav-logged-in ul li:hover{
+  background-color:  #F0F0F0;
+}
+
 .group:after{
   content: "";
   clear: both;
