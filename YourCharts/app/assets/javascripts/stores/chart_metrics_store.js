@@ -25,6 +25,11 @@
     ChartMetricsStore.emit(CHANGE);
   };
 
+  var clear = function(){
+    _metrics.data = {};
+    ChartMetricsStore.emit(CHANGE);
+  };
+
   var ChartMetricsStore = window.ChartMetricsStore = $.extend({}, EventEmitter.prototype, {
     all: function(){
       var copy = {};
@@ -68,6 +73,9 @@
           break;
         case ChartMetricsConstants.RESET:
           reset(action.payload);
+          break;
+        case DataSourceConstants.ADD:
+          clear();
           break;
       }
     })

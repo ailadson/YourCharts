@@ -1,6 +1,9 @@
 /* global React */
 /* global DataSourceStore */
 /* global DataSourceActions */
+/* global cloudinary */
+/* global CLOUDINARY_OPTIONS */
+
 
 (function() {
   'use strict';
@@ -41,38 +44,21 @@
           this.setState({ uploadingFile: false });
           break;
       }
+
     },
 
     handleUpload: function(e){
-      var reader = new FileReader();
-      var file = e.target.files[0];
-      var name = file.name.split('.')[0].toLowerCase();
-      var extension = file.name.split('.').pop().toLowerCase();
+      e.preventDefault();
 
-      reader.onload = function(f){
-        var dataObject;
+      cloudinary.openUploadWidget(CLOUDINARY_OPTIONS, function(error, result) {
+        result = result[0];
+        DataSourceActions.create({
+          name: result.original_filename,
+          url: result.secure_url
+        });
 
-        switch(extension){
-          case "csv":
-            dataObject = d3.csv.parse(f.target.result);
-            break;
-          case "json":
-            dataObject = JSON.parse(f.target.result);
-            break;
-          case "tsv":
-            dataObject = d3.tsv.parse(f.target.result);
-            break;
-        }
+      });
 
-        debugger;
-
-        if(dataObject){
-          DataSourceActions.add({ name: name, data: dataObject }); //CHANGE TO CREATE
-        }
-
-      }.bind(this);
-
-      reader.readAsText(file);
       this.setState({ uploadingFile: false });
     },
 
@@ -93,10 +79,13 @@
       return(
         <div className="data-uploader data-manager-panel">
           <header>Data Source</header>
+          {
+            this.state.selected ? <div>Hey</div> : <div></div>
+          }
           <select onChange={this.handleChange}>{dataOptions}</select>
           {
             this.state.uploadingFile ?
-              <input type="file" onChange={this.handleUpload}/> : ""
+              <input type="file" onClick={this.handleUpload}/> : ""
           }
         </div>
       );

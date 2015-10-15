@@ -28,15 +28,18 @@
 
     _updateSize: function(){
       var margin = {};
+      var height = parseInt(ChartMetricsStore.get("Height")) || this.state.height;
+      var width = parseInt(ChartMetricsStore.get("Width")) || this.state.width;
 
-      margin.top = parseInt(ChartMetricsStore.get("Margin_Top"));
-      margin.bottom = parseInt(ChartMetricsStore.get("Margin_Bottom"));
-      margin.left = parseInt(ChartMetricsStore.get("Margin_Left"));
-      margin.right = parseInt(ChartMetricsStore.get("Margin_Right"));
+      margin.top = parseInt(ChartMetricsStore.get("Margin_Top")) || this.state.margin.top;
+      margin.bottom = parseInt(ChartMetricsStore.get("Margin_Bottom")) || this.state.margin.bottom;
+      margin.left = parseInt(ChartMetricsStore.get("Margin_Left")) || this.state.margin.left;
+      margin.right = parseInt(ChartMetricsStore.get("Margin_Right")) || this.state.margin.right;
+
 
       this.setState({
-        width: parseInt(ChartMetricsStore.get("Width")),
-        height: parseInt(ChartMetricsStore.get("Height")),
+        width: width,
+        height: height,
         margin: margin
       });
     },

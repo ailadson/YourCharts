@@ -48,7 +48,8 @@
       var inputs = [];
       var metrics = this.props.metrics.data;
       var measures = DataSourceStore.selectedMeasures();
-
+      console.log(metrics);
+      console.log(ChartMetricsStore.all())
       var getOptions = function(measure){
         return( <option value={measure}>{measure}</option>);
       };
@@ -68,6 +69,7 @@
                        target="_blank">
                       Formatting info.
                     </a>
+                    <br/>
                     <input name={m}
                            onChange={this.changeDataMetric}/>
                   </div>

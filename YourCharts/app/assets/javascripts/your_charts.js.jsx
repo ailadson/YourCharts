@@ -1,4 +1,5 @@
 /* global React */
+/* global DataSourceStore */
 
 $(function(){
   var Route = ReactRouter.Route;
@@ -53,26 +54,25 @@ $(function(){
 
   var appRoutes = (
     <Route path="/" component={App}>
-      <IndexRoute component={{Header: AppNavBar, Content: Components.ChartDashboard}}/>
+      <IndexRoute components={{Header: AppNavBar, Content: Components.ChartDashboard}}/>
     </Route>
   );
 
   var guestRoutes = (
     <Route path="/" component={App}>
-      <IndexRoute component={{Header: GuestNavBar, Content: Components.PoductPreview}}/>
+      <IndexRoute components={{Header: GuestNavBar, Content: Components.PoductPreview}}/>
     </Route>
   );
 
 
   window.runApp = function(){
     var root = document.getElementById("app");
-
+    DataSourceActions.fetch();
     React.render(<Router>{appRoutes}</Router>, root);
   };
 
   window.runGuest = function(){
     var root = document.getElementById("app");
-
     React.render(<Router>{guestRoutes}</Router>, root);
   };
 

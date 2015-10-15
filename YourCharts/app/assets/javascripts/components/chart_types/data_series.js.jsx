@@ -1,5 +1,7 @@
 /* global ChartMetricsStore */
 /* global ChartMetricsActions */
+/* global AppDispatcher */
+/* global React */
 
 (function() {
   'use strict';
@@ -7,6 +9,7 @@
   window.Components.DataSeriesMixin = {
     componentWillMount: function(){
       this.attemptReset();
+      ChartMetricsStore.addChangeHandler(this.attemptReset); //needed for data source change
     },
 
     attemptReset: function(){

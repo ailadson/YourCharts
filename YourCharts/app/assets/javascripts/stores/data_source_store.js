@@ -1,6 +1,7 @@
 /* global EventEmitter */
 /* global AppDispatcher */
 /* global DataSourceConstants */
+/* global d3 */
 
 (function() {
   'use strict';
@@ -13,6 +14,35 @@
   var addSource = function(dataSource){
     _selectedDataSource = dataSource;
     _dataSources.push(dataSource);
+    DataSourceStore.emit(CHANGE);
+  };
+
+  var parseDatum = function(dataSource){
+    console.log(dataSource);
+    var extension = dataSource.url.split('.').pop().toLowerCase();
+
+    switch(extension){
+      case "csv":
+        dataSource.data = d3.csv.parse(dataSource.data);
+        break;
+      // case "json":
+      //   dataSource.data = JSON.parse(dataSource.data);
+      //   break;
+      case "tsv":
+        dataSource.data = d3.tsv.parse(dataSource.data);
+        break;
+    }
+    console.log(dataSource);
+  };
+
+  var parseData = function(dataSources){
+    dataSources.forEach(function(dataSource){
+      parseDatum(dataSource);
+    });
+  };
+
+  var reset = function(dataSources){
+    _dataSources = dataSources;
     DataSourceStore.emit(CHANGE);
   };
 
@@ -76,10 +106,15 @@
     dispatchId: AppDispatcher.register(function(action){
       switch(action.actionType){
         case DataSourceConstants.ADD:
+          parseDatum(action.payload);
           addSource(action.payload);
           break;
         case DataSourceConstants.SETSELECTED:
           setSelected(action.payload);
+          break;
+        case DataSourceConstants.POPULATE:
+          parseData(action.payload);
+          reset(action.payload);
           break;
       }
     })
