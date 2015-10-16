@@ -10,7 +10,17 @@ var ApiUtil = {
     });
   },
 
-  fetch: function(){
+  createChartMetric: function(data){
+    $.post('api/chart_metrics', { chart_metric: data}, function(chart_metric){
+      console.log("");
+      console.log("~~Successfully saved metric~~");
+      console.log(chart_metric);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log("");
+    });
+  },
+
+  fetchDataSources: function(){
     $.get('api/data_sources', {}, function(dataSources){
       var sourcesFetched = 0;
 
@@ -22,7 +32,7 @@ var ApiUtil = {
           if(sourcesFetched === dataSources.length){
             DataSourceActions.populate(dataSources);
           }
-        })
+        });
       });
 
     });

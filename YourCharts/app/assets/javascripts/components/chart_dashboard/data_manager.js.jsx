@@ -8,20 +8,23 @@
 
   window.Components.DataManager = React.createClass({
     getInitialState: function(){
-      return { metricName: "" };
+      return { chartName: "" };
     },
 
-    changeMetricName: function(e){
-      this.setState({ metricName: e.target.value });
+    changeChartName: function(e){
+      this.setState({ chartName: e.target.value });
     },
 
     saveMetrics: function(){
-      if(!DataSourceStore.selectedData()){ return; }
+      var dataId = DataSourceStore.selectedId();
+      if(!dataId || !this.state.chartName){ return; }
 
       var data = {};
       data.metrics = JSON.stringify(ChartMetricsStore.all());
-      data.data_id = DataSourceStore.selectedData().id;
-      console.log(data);
+      data.data_id = dataId;
+      data.name = this.state.chartName;
+      data.chart_type = this.props.chartType;
+      ChartMetricsActions.save(data);
     },
 
 
@@ -31,7 +34,7 @@
           <Components.DataSourceLoader />
           <div className="data-manager-panel chart-metric-button">
             <label>
-              Chart Name: <input type="text" value={this.state.metricName} onChange={this.changeMetricName}/>
+              Chart Name: <input type="text" value={this.state.chartName} onChange={this.changeChartName}/>
             </label>
             <button onClick={this.saveMetrics}>Save Chart</button>
           </div>

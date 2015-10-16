@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   has_many :data_sources
+  has_many :metrics, through: :data_sources, source: :metrics
 
   attr_reader :password
 

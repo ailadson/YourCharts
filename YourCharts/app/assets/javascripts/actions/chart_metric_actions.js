@@ -1,4 +1,5 @@
 /* global AppDispatcher */
+/* global ApiUtil */
 /* global ChartMetricsConstants */
 
 var ChartMetricsActions = {
@@ -14,6 +15,10 @@ var ChartMetricsActions = {
       actionType: ChartMetricsConstants.UPDATEDATA,
       payload: { metric: metric, value: value}
     });
+  },
+
+  save: function(data){
+    ApiUtil.createChartMetric(data);
   },
 
   reset: function(metrics){

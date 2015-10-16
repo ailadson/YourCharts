@@ -11,7 +11,7 @@
   window.Components.ChartDashboard = React.createClass({
     getInitialState: function(){
       return {
-        chartType: "LineGraph",
+        chartType: "VerticalBar",
         dataSource: DataSourceStore.selectedData(),
         metrics: ChartMetricsStore.all()
        };
@@ -44,6 +44,7 @@
       return(
         <div className="chart-dashboard">
           <Components.DataManager metrics={this.state.metrics}
+                                  chartType={this.state.chartType}
                                   onChartTypeClick={this.handleChartTypeChange}/>
 
                                 <Components.ChartViewer data={this.state.dataSource}

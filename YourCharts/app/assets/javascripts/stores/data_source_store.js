@@ -18,7 +18,6 @@
   };
 
   var parseDatum = function(dataSource){
-    console.log(dataSource);
     var extension = dataSource.url.split('.').pop().toLowerCase();
 
     switch(extension){
@@ -53,6 +52,10 @@
   var DataSourceStore = window.DataSourceStore = $.extend({}, EventEmitter.prototype, {
     selectedName: function(){
       return _selectedDataSource && _selectedDataSource.name;
+    },
+
+    selectedId: function(){
+      return _selectedDataSource && _selectedDataSource.id;
     },
 
     find: function(name){

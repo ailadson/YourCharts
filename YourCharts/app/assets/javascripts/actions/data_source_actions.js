@@ -4,7 +4,7 @@
 
 var DataSourceActions = {
   fetch: function(){
-    ApiUtil.fetch();
+    ApiUtil.fetchDataSources();
   },
 
   populate: function(dataSources){
