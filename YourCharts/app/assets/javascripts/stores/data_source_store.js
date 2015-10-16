@@ -32,7 +32,6 @@
         dataSource.data = d3.tsv.parse(dataSource.data);
         break;
     }
-    console.log(dataSource);
   };
 
   var parseData = function(dataSources){
