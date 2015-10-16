@@ -1,11 +1,13 @@
 /* global EventEmitter */
 /* global AppDispatcher */
 /* global ChartMetricsConstants */
+/* global DataSourceConstants */
 
 (function() {
   'use strict';
 
   var CHANGE = "change";
+  var CLEAR = "clear";
 
   var _metrics = {};
 
@@ -27,7 +29,7 @@
 
   var clear = function(){
     _metrics.data = {};
-    ChartMetricsStore.emit(CHANGE);
+    ChartMetricsStore.emit(CLEAR);
   };
 
   var ChartMetricsStore = window.ChartMetricsStore = $.extend({}, EventEmitter.prototype, {
@@ -55,6 +57,14 @@
       }
     },
 
+    addClearHandler: function(cb){
+      this.on(CLEAR, cb);
+    },
+
+    removeClearHandler: function(cb){
+      this.removeListener(CLEAR, cb);
+    },
+
     addChangeHandler: function(cb){
       this.on(CHANGE, cb);
     },
@@ -75,6 +85,7 @@
           reset(action.payload);
           break;
         case DataSourceConstants.ADD:
+        case DataSourceConstants.SETSELECTED:
           clear();
           break;
       }

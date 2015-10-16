@@ -9,7 +9,7 @@
   window.Components.DataSeriesMixin = {
     componentWillMount: function(){
       this.attemptReset();
-      ChartMetricsStore.addChangeHandler(this.attemptReset); //needed for data source change
+      ChartMetricsStore.addClearHandler(this.attemptReset); //needed for data source change
     },
 
     attemptReset: function(){
