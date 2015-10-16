@@ -1,0 +1,35 @@
+.profile{
+  height: 100%;
+  width: 90%;
+  margin: auto;
+  background-color: #ccc
+}
+
+.profile-side-panel{
+  width: 30%;
+  height: 100%;
+  float: left;
+}
+
+.profile-side-panel div{
+  width: 90%;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 10px #000;
+  text-align: center;
+  padding: 1em;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.profile-side-panel div:hover{
+  box-shadow: 0 0 20px #000;
+}
+
+.profile-main-content{
+  width: 70%;
+  height: 100%;
+  background-color: #555;
+  float: right;
+}

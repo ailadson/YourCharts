@@ -62,6 +62,14 @@
       return _dataSources.find(function(source){ return source.name === name; });
     },
 
+    findById: function(id){
+      return _dataSources.find(function(dSource){ return dSource.id === id; });
+    },
+
+    findNameById: function(id){
+      return this.findById(id).name;
+    },
+
     selectedData: function(){
       return _selectedDataSource && _selectedDataSource.data;
     },

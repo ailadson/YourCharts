@@ -26,5 +26,16 @@ var ChartMetricsActions = {
       actionType: ChartMetricsConstants.RESET,
       payload: metrics
     });
+  },
+
+  fetch: function(){
+    ApiUtil.fetchChartMetrics();
+  },
+
+  populate: function(metrics){
+    AppDispatcher.dispatch({
+      actionType: ChartMetricsConstants.POPULATE,
+      payload: metrics
+    });
   }
 };

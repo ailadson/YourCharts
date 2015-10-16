@@ -12,11 +12,7 @@ var ApiUtil = {
 
   createChartMetric: function(data){
     $.post('api/chart_metrics', { chart_metric: data}, function(chart_metric){
-      console.log("");
-      console.log("~~Successfully saved metric~~");
       console.log(chart_metric);
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~");
-      console.log("");
     });
   },
 
@@ -35,6 +31,12 @@ var ApiUtil = {
         });
       });
 
+    });
+  },
+
+  fetchChartMetrics: function(){
+    $.get('api/chart_metrics', {}, function(metrics){
+      ChartMetricsActions.populate(metrics);
     });
   }
 };

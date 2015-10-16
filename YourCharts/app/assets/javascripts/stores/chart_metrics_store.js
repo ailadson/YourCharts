@@ -10,7 +10,8 @@
   var CLEAR = "clear";
 
   var _metrics = {};
-
+  var _userMetrics = [];
+  var _sharedMetrics = [];
 
   var updateDisplay = function(data){
     _metrics.display[data.metric] = data.value;
@@ -30,6 +31,17 @@
   var clear = function(){
     _metrics.data = {};
     ChartMetricsStore.emit(CLEAR);
+  };
+
+  var parseMetrics = function(metrics){
+    metrics.forEach(function(metric){
+      metric.metrics = JSON.parse(metric.metrics);
+    });
+  };
+
+  var resetUserMetrics = function(metrics){
+    _userMetrics = metrics;
+    ChartMetricsStore.emit(CHANGE);
   };
 
   var ChartMetricsStore = window.ChartMetricsStore = $.extend({}, EventEmitter.prototype, {
@@ -57,6 +69,10 @@
       }
     },
 
+    userMetrics: function(){
+      return _userMetrics.slice();
+    },
+
     addClearHandler: function(cb){
       this.on(CLEAR, cb);
     },
@@ -75,6 +91,10 @@
 
     dispatchId: AppDispatcher.register(function(action){
       switch(action.actionType){
+        case ChartMetricsConstants.POPULATE:
+          parseMetrics(action.payload);
+          resetUserMetrics(action.payload);
+          break;
         case ChartMetricsConstants.UPDATEDISPLAY:
           updateDisplay(action.payload);
           break;

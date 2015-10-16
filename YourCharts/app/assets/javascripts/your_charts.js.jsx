@@ -7,6 +7,14 @@ $(function(){
   var IndexRoute = ReactRouter.IndexRoute;
 
   var AppNavBar = React.createClass({
+    goToProfile: function(){
+      this.props.history.pushState(null, '/profile');
+    },
+
+    goToChartDashboard: function(){
+      this.props.history.pushState(null, '/');
+    },
+
     signOut: function(){
       $.ajax({
         url: "/session",
@@ -22,8 +30,8 @@ $(function(){
         <nav className="nav-bar nav-logged-in group">
           <div>Your Charts</div>
           <ul className="group">
-            <li>Profile</li>
-            <li>Upload Data</li>
+            <li onClick={this.goToProfile}>Profile</li>
+            <li onClick={this.goToChartDashboard}>Upload Data</li>
             <li onClick={this.signOut}>Sign Out</li>
           </ul>
           </nav>
@@ -55,6 +63,7 @@ $(function(){
   var appRoutes = (
     <Route path="/" component={App}>
       <IndexRoute components={{Header: AppNavBar, Content: Components.ChartDashboard}}/>
+      <Route path="profile"  components={{Header: AppNavBar, Content: Components.Profile}}/>
     </Route>
   );
 
@@ -68,6 +77,7 @@ $(function(){
   window.runApp = function(){
     var root = document.getElementById("app");
     DataSourceActions.fetch();
+    ChartMetricsActions.fetch();
     React.render(<Router>{appRoutes}</Router>, root);
   };
 
