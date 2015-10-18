@@ -10,7 +10,8 @@
     showChart: function(metric){
       this.history.pushState(null, "/", {
         metric: metric.name,
-        type: metric.chart_type
+        type: metric.chart_type,
+        data: metric.data_id
       });
     },
 

@@ -22,9 +22,17 @@
       DataSourceStore.addChangeHandler(this.updateDataSource);
     },
 
+    componentDidMount: function(){
+      if(this.props.location.query.metric){
+        this.state.chartType = this.props.location.query.type;
+        SavedChartActions.setActiveChart(this.props.location.query);
+      }
+    },
+
     componentDidUnmount: function(){
       ChartMetricsStore.removeChangeHandler(this.updateMetrics);
       DataSourceStore.removeChangeHandler(this.updateDataSource);
+
     },
 
     updateMetrics: function(){
@@ -36,7 +44,8 @@
     },
 
     handleChartTypeChange: function(type){
-      this.setState({chartType: type});
+      ChartMetricsStore.clear(); //BAD ANTHONY!! BUT I NEED IT TO HAPPEN IMMEDIATELY
+      this.setState({chartType: type, metrics: ChartMetricsStore.all() });
     },
 
     render: function(){

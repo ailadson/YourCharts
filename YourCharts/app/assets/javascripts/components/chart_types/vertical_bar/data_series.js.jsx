@@ -102,6 +102,7 @@
           return sum/count;
         }.bind(this)());
 
+
         return(
           <Components.Bar
             height={this.props.metrics.display.Height - this.yScale(yAvgValue)}
@@ -126,7 +127,6 @@
       }
 
       this.setScales();
-
       return (
         <g>
           <g transform={"translate("+this.props.metrics.display.Margin_Left+","+this.props.metrics.display.Margin_Top+")"}>

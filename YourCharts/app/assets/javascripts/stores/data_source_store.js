@@ -31,12 +31,27 @@
         dataSource.data = d3.tsv.parse(dataSource.data);
         break;
     }
+
+    dataSource.data.forEach(function(dataS){
+      for(var d in dataS){
+        if(dataS.hasOwnProperty(d)){
+          if(+(dataS[d]) === +(dataS[d])){ //check if NaN
+            dataS[d] = +(dataS[d]);
+          }
+        }
+      }
+    });
   };
 
   var parseData = function(dataSources){
     dataSources.forEach(function(dataSource){
       parseDatum(dataSource);
     });
+  };
+
+  var changeSelectedName = function(name){
+    _selectedDataSource.name = name;
+    DataSourceStore.emit(CHANGE);
   };
 
   var reset = function(dataSources){
@@ -51,7 +66,7 @@
 
   var DataSourceStore = window.DataSourceStore = $.extend({}, EventEmitter.prototype, {
     selectedName: function(){
-      return _selectedDataSource && _selectedDataSource.name;
+      return (_selectedDataSource && _selectedDataSource.name) || "";
     },
 
     selectedId: function(){
@@ -67,7 +82,7 @@
     },
 
     findNameById: function(id){
-      return this.findById(id).name;
+      return this.findById(parseInt(id)).name;
     },
 
     selectedData: function(){
@@ -115,6 +130,13 @@
 
     dispatchId: AppDispatcher.register(function(action){
       switch(action.actionType){
+        case DataSourceConstants.UPDATESELECTED:
+          changeSelectedName(action.payload.name);
+          break;
+        case SavedChartConstants.SETACTIVE:
+          var sourceName = DataSourceStore.findNameById(action.payload.data);
+          setSelected(sourceName);
+          break;
         case DataSourceConstants.ADD:
           parseDatum(action.payload);
           addSource(action.payload);

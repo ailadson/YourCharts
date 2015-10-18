@@ -13,6 +13,7 @@
     },
 
     render: function(){
+      
       return(
         <rect fill={this.props.color}
           width={this.props.width} height={this.props.height}

@@ -6,7 +6,7 @@ class Api::ChartMetricsController < ApplicationController
 
   def create
     @chart_metric = ChartMetric.new(chart_metric_params)
-
+    p @chart_metric
     if @chart_metric.save
       render json: @chart_metric
     else

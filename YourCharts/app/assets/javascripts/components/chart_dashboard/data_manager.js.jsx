@@ -8,7 +8,23 @@
 
   window.Components.DataManager = React.createClass({
     getInitialState: function(){
-      return { chartName: "" };
+      return {
+        chartName: ChartMetricsStore.selectedName() || DataSourceStore.selectedName()
+      };
+    },
+
+    componentDidMount: function(){
+      DataSourceStore.addChangeHandler(this._updateName);
+    },
+
+    componentWillUnmount: function(){
+      DataSourceStore.removeChangeHandler(this._updateName);
+    },
+
+    _updateName: function(){
+      this.setState({
+        chartName: ChartMetricsStore.selectedName() || DataSourceStore.selectedName()
+      });
     },
 
     changeChartName: function(e){
@@ -27,6 +43,22 @@
       ChartMetricsActions.save(data);
     },
 
+    createButton: function(){
+      var dataSourceId = DataSourceStore.selectedId();
+
+      if(!dataSourceId){
+        <span></span>
+      } else if(ChartMetricsStore.hasMetricForData(dataSourceId)){
+        return (
+          <button onClick={this.saveMetrics}>Edit Chart</button>
+        );
+      } else {
+        return (
+          <button onClick={this.editMetrics}>Save Chart</button>
+        );
+      }
+    },
+
 
     render: function(){
       return(
@@ -36,7 +68,7 @@
             <label>
               Chart Name: <input type="text" value={this.state.chartName} onChange={this.changeChartName}/>
             </label>
-            <button onClick={this.saveMetrics}>Save Chart</button>
+            {this.createButton()}
           </div>
           <Components.ChartTypes onClick={this.props.onChartTypeClick} />
           <Components.ChartMetrics metrics={this.props.metrics} />

@@ -8,11 +8,12 @@
   window.Components = window.Components || {};
 
   window.Components.ChartMetrics = React.createClass({
-    // componentWillMount: function(){
-    //   DataSourceStore.addChangeHandler(function(){
-    //     this.forceUpdate();
-    //   }.bind(this));
-    // },
+    mixins: [React.addons.LinkedStateMixin],
+
+    getInitialState: function(){
+      var dataMetrics = this.props.metrics.data || {};
+      return dataMetrics;
+    },
 
     changeDisplayMetric: function(e){
       var metric = e.target.name;
@@ -48,9 +49,9 @@
       var inputs = [];
       var metrics = this.props.metrics.data;
       var measures = DataSourceStore.selectedMeasures();
-      
-      var getOptions = function(measure){
-        return( <option value={measure}>{measure}</option>);
+
+      var getOptions = function(measure, i){
+        return( <option value={measure} key={measure}>{measure}</option>);
       };
 
       for(var m in metrics ){
@@ -74,7 +75,7 @@
                   </div>
                 :
                   <select name={m} onChange={this.changeDataMetric}>
-                    <option value={null} defaultValue></option>
+                    <option value={null}></option>
                     {
                       measures.map(getOptions)
                     }

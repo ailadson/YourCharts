@@ -23,6 +23,23 @@
     ChartMetricsStore.emit(CHANGE);
   };
 
+  var setMetricsFromUser = function(name){
+    var chosenMetrics = _userMetrics.find(function(m){  return m.name === name; });
+    _metrics = chosenMetrics.metrics;
+    setTypes();
+    ChartMetricsStore.emit(CHANGE);
+  };
+
+  var setTypes = function(){
+    for( var d in _metrics.display){
+      if(_metrics.display.hasOwnProperty(d)){
+        if(+(_metrics.display[d]) === +(_metrics.display[d])){
+          _metrics.display[d] = +(_metrics.display[d]);
+        }
+      }
+    }
+  };
+
   var reset = function(metrics){
     _metrics = metrics;
     ChartMetricsStore.emit(CHANGE);
@@ -45,6 +62,11 @@
   };
 
   var ChartMetricsStore = window.ChartMetricsStore = $.extend({}, EventEmitter.prototype, {
+    clear: function(){
+      _metrics.data = {};
+      _metrics.display = {};
+    },
+
     all: function(){
       var copy = {};
       for(var m in _metrics){
@@ -69,6 +91,17 @@
       }
     },
 
+    hasMetricForData: function(data_id){
+      return _userMetrics.find(function(metric){
+        return metric.data_id === data_id;
+      });
+    },
+
+    selectedName: function(data_id){
+      var m = this.hasMetricForData(data_id);
+      return (m && m.name);
+    },
+
     userMetrics: function(){
       return _userMetrics.slice();
     },
@@ -91,6 +124,10 @@
 
     dispatchId: AppDispatcher.register(function(action){
       switch(action.actionType){
+        case SavedChartConstants.SETACTIVE:
+          AppDispatcher.waitFor([DataSourceStore.dispatchId]);
+          setMetricsFromUser(action.payload.metric);
+          break;
         case ChartMetricsConstants.POPULATE:
           parseMetrics(action.payload);
           resetUserMetrics(action.payload);

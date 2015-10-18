@@ -30,5 +30,16 @@ var DataSourceActions = {
       actionType: DataSourceConstants.SETSELECTED,
       payload: name
     });
+  },
+
+  updateSelected: function(dataSource){
+    AppDispatcher.dispatch({
+      actionType: DataSourceConstants.UPDATESELECTED,
+      payload: dataSource
+    });
+  },
+
+  updateName: function(data){
+    ApiUtil.updateDataSource(data);
   }
 };

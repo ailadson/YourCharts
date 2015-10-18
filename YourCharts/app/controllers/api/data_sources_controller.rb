@@ -19,6 +19,12 @@ class Api::DataSourcesController < ApplicationController
   end
 
   def update
+    @data_source = DataSource.find(params[:id])
+    if @data_source.update(name: params[:data_source][:name])
+      render json: @data_source
+    else
+      render json: @data_source.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   def destroy

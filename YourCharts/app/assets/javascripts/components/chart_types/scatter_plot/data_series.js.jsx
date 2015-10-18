@@ -13,6 +13,8 @@
 
     defaultMetrics: function(){
       var defaultMetrics = this.props.defaultMetrics;
+      var display = this.props.metrics.display;
+      var data = this.props.metrics.data;
       var maxValue = this.computeDefaultMax();
       var minValue = this.computeDefaultMin();
 
@@ -146,8 +148,9 @@
       if($.isEmptyObject(this.props.metrics) ||
         !this.props.metrics.data.X_Metric ||
         !this.props.metrics.data.Y_Metric){
+
         return(
-          <g></g>
+          <g>{this.createAxis()}</g>
         );
       }
 

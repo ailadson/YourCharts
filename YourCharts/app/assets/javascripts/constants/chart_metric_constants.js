@@ -3,5 +3,6 @@ var ChartMetricsConstants = {
   RESET: "chartmetricRESET",
   UPDATEDATA: "chartmetricUPDATEDATA",
   CLEAR: "chartmetricCLEAR",
-  POPULATE: "chartmetricPOPULATE"
+  POPULATE: "chartmetricPOPULATE",
+  PROCESSCREATED: "chartmetricPROCESSCREATED"
 };

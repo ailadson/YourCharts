@@ -1,5 +1,6 @@
 var DataSourceConstants = {
   POPULATE: "dataSourcePOPULATE",
   ADD: "dataSourceADD",
-  SETSELECTED: "dataSourceSETSELECTED"
+  SETSELECTED: "dataSourceSETSELECTED",
+  UPDATESELECTED: "datasourceUPDATESELECTED"
 };

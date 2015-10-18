@@ -1,0 +1,3 @@
+var SavedChartConstants = {
+  SETACTIVE: "savedchartSETACTIVE"
+};

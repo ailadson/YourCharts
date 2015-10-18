@@ -37,5 +37,12 @@ var ChartMetricsActions = {
       actionType: ChartMetricsConstants.POPULATE,
       payload: metrics
     });
+  },
+
+  processCreated: function(metric){
+    AppDispatcher.dispatch({
+      actionType: ChartMetricsConstants.PROCESSCREATED,
+      payload: metric
+    });
   }
 };

@@ -1,8 +1,6 @@
 /* global React */
 /* global DataSourceStore */
 /* global DataSourceActions */
-/* global cloudinary */
-/* global CLOUDINARY_OPTIONS */
 
 
 (function() {
@@ -10,14 +8,9 @@
 
   window.Components = window.Components || {};
 
-  window.Components.DataSourceLoader = React.createClass({
+  window.Components.ChatSourceLoader = React.createClass({
     getInitialState: function(){
-      return {
-        uploadingFile: false,
-        fileData: null,
-        selected: DataSourceStore.selectedName(),
-        dataSourceName: DataSourceStore.selectedName()
-      };
+      return {};
     },
 
     componentDidMount: function(){
@@ -29,7 +22,7 @@
     },
 
     _updateSelected: function(){
-      this.setState({ selected : DataSourceStore.selectedName() });
+      this.setState({ selected : ChartMetricsStore.selectedName() });
     },
 
     handleChange: function(e){
@@ -46,17 +39,6 @@
           break;
       }
 
-    },
-
-    changeDataSourceName: function(e){
-      this.setState({ dataSourceName: e.target.value });
-    },
-
-    saveDataSourceName: function(e){
-      DataSourceActions.updateName({
-        id: DataSourceStore.selectedId(),
-        name: this.state.dataSourceName
-      });
     },
 
     handleUpload: function(e){
@@ -91,18 +73,10 @@
       return(
         <div className="data-uploader data-manager-panel">
           <header>Data Source</header>
-          <select onChange={this.handleChange} value={this.state.selected}>{dataOptions}</select>
-          <br/>
           {
-            this.state.selected ?
-              <label>
-                Data Source Name:
-                <input type="text" value={this.state.dataSourceName} onChange={this.changeDataSourceName}/>
-                <button onClick={this.saveDataSourceName}>Save Name</button>
-              </label>
-            :
-              <div></div>
+            this.state.selected ? <div></div> : <div></div>
           }
+          <select onChange={this.handleChange} value={this.state.selected}>{dataOptions}</select>
           {
             this.state.uploadingFile ?
               <input type="file" onClick={this.handleUpload}/> : ""
