@@ -12,6 +12,10 @@
       ChartMetricsStore.addClearHandler(this.attemptReset); //needed for data source change
     },
 
+    conponentWillUnmount: function(){
+      ChartMetricsStore.removeClearHandler(this.attemptReset);
+    },
+
     attemptReset: function(){
       if(AppDispatcher.isDispatching()){
         setTimeout(this.attemptReset.bind(this), 100);
@@ -21,7 +25,7 @@
         var resetMetrics = {};
         resetMetrics.data = $.extend({}, dMetrics.data, pMetrics.data);
         resetMetrics.display = $.extend({}, dMetrics.display, pMetrics.display);
-        
+
         ChartMetricsActions.reset(resetMetrics);
       }
     },

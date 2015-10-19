@@ -34,12 +34,16 @@
 
     handleChange: function(e){
       var metric = ChartMetricsStore.getMetricByName(e.target.value);
-      var savedChartData = {};
-      savedChartData.metric = metric.name;
-      savedChartData.data = metric.data_id;
-      this.props.setChartType(metric.chart_type);
-      // savedChartData.type = metric.chart_type;
-      SavedChartActions.setActiveChart(savedChartData);
+      if(metric){
+        var savedChartData = {};
+        savedChartData.metric = metric.name;
+        savedChartData.data = metric.data_id;
+        this.props.setChartType(metric.chart_type);
+        SavedChartActions.setActiveChart(savedChartData);
+      } else {
+        //to do
+        DataSourceActions.setSelected({ data: null });
+      }
     },
 
     saveMetrics: function(){
@@ -52,6 +56,19 @@
       data.name = this.state.chartName;
       data.chart_type = this.props.chartType;
       ChartMetricsActions.save(data);
+    },
+
+    editMetrics: function(){
+      var dataId = DataSourceStore.selectedId();
+      if(!dataId || !this.state.chartName){ return; }
+
+      var data = {};
+      data.id = ChartMetricsStore.selectedId();
+      data.metrics = JSON.stringify(ChartMetricsStore.all());
+      data.data_id = dataId;
+      data.name = this.state.chartName;
+      data.chart_type = this.props.chartType;
+      ChartMetricsActions.edit(data);
     },
 
     createButton: function(){

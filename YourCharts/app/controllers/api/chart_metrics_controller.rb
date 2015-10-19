@@ -6,8 +6,18 @@ class Api::ChartMetricsController < ApplicationController
 
   def create
     @chart_metric = ChartMetric.new(chart_metric_params)
-    p @chart_metric
+
     if @chart_metric.save
+      render json: @chart_metric
+    else
+      render json: @chart_metric.errors.full_messages, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @chart_metric = ChartMetric.find(params[:id])
+
+    if @chart_metric.update(chart_metric_params)
       render json: @chart_metric
     else
       render json: @chart_metric.errors.full_messages, status: :unprocessable_entity

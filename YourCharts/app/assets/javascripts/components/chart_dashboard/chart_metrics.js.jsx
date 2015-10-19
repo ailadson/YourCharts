@@ -74,8 +74,8 @@
                            onChange={this.changeDataMetric}/>
                   </div>
                 :
-                  <select name={m} onChange={this.changeDataMetric}>
-                    <option value={null}></option>
+                  <select name={m} value={metrics[m]} onChange={this.changeDataMetric}>
+                    <option value={""}></option>
                     {
                       measures.map(getOptions)
                     }

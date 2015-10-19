@@ -28,6 +28,14 @@ var ApiUtil = {
   },
 
   editChartMetric: function(data){
+    $.ajax({
+      url: "/api/chart_metrics/" + data.id,
+      data: { chart_metric: data },
+      type: "PATCH",
+      success: function(chartMetric){
+        ChartMetricsActions.processUpdated(chartMetric);
+      }
+    });
   },
 
   fetchDataSources: function(){

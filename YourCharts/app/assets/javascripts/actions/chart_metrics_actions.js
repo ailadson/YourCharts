@@ -21,6 +21,11 @@ var ChartMetricsActions = {
     ApiUtil.createChartMetric(data);
   },
 
+  edit: function(data){
+    console.log(data);
+    ApiUtil.editChartMetric(data);
+  },
+
   //poor naming. only changes metrics.metrics
   reset: function(metrics){
     AppDispatcher.dispatch({
@@ -51,6 +56,13 @@ var ChartMetricsActions = {
   processCreated: function(metric){
     AppDispatcher.dispatch({
       actionType: ChartMetricsConstants.PROCESSCREATED,
+      payload: metric
+    });
+  },
+
+  processUpdated: function(metric){
+    AppDispatcher.dispatch({
+      actionType: ChartMetricsConstants.PROCESSUPDATED,
       payload: metric
     });
   }

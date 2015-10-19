@@ -5,5 +5,6 @@ var ChartMetricsConstants = {
   UPDATEDATA: "chartmetricUPDATEDATA",
   CLEAR: "chartmetricCLEAR",
   POPULATE: "chartmetricPOPULATE",
-  PROCESSCREATED: "chartmetricPROCESSCREATED"
+  PROCESSCREATED: "chartmetricPROCESSCREATED",
+  PROCESSUPDATED: "chartmetricPROCESSUPDATED"
 };

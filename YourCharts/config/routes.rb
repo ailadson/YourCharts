@@ -6,6 +6,6 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resources :data_sources, only: [:index, :create, :update, :destroy]
-    resources :chart_metrics, only: [:index, :create, :destroy]
+    resources :chart_metrics, only: [:index, :create, :update, :destroy]
   end
 end

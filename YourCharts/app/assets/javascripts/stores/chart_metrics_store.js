@@ -33,6 +33,15 @@
     ChartMetricsStore.emit(CHANGE);
   };
 
+  var updateMetric = function(metric){
+    for(var m in metric){
+      if(metric.hasOwnProperty(m)){
+        _metrics[m] = metric[m];
+      }
+    }
+    ChartMetricsStore.emit(CHANGE);
+  };
+
   var setMetricsFromUser = function(name){
     var chosenMetrics = _userMetrics.find(function(m){  return m.name === name; });
     _metrics = chosenMetrics;
@@ -180,6 +189,10 @@
         case ChartMetricsConstants.PROCESSCREATED:
           parseMetric(action.payload);
           addCreatedMetric(action.payload);
+          break;
+        case ChartMetricsConstants.PROCESSUPDATED:
+          parseMetric(action.payload);
+          updateMetric(action.payload);
           break;
         case DataSourceConstants.ADD:
         case DataSourceConstants.SETSELECTED:
