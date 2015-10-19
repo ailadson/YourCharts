@@ -23,7 +23,6 @@ var ApiUtil = {
 
   createChartMetric: function(data){
     $.post('api/chart_metrics', { chart_metric: data }, function(chart_metric){
-      console.log(chart_metric);
       ChartMetricsActions.processCreated(chart_metric);
     });
   },
@@ -34,7 +33,7 @@ var ApiUtil = {
   fetchDataSources: function(){
     $.get('api/data_sources', {}, function(dataSources){
       var sourcesFetched = 0;
-      console.log(dataSources);
+
       dataSources.forEach(function(dataSource){
         $.get(dataSource.url, {}, function(file){
           sourcesFetched += 1;

@@ -54,7 +54,7 @@
 
       var DataSeries = Components.DataSeries[this.props.chartType];
       var defaultMetrics = {
-        // color: this.props.color,
+        color: this.props.color,
         height: parseInt(this.state.height),
         width: parseInt(this.state.width),
         margin: this.state.margin

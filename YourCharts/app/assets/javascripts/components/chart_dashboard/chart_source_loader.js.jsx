@@ -8,79 +8,86 @@
 
   window.Components = window.Components || {};
 
-  window.Components.ChatSourceLoader = React.createClass({
+  window.Components.ChartSourceLoader = React.createClass({
     getInitialState: function(){
-      return {};
+      return { chartName: "", selected: ChartMetricsStore.selectedName() };
     },
 
     componentDidMount: function(){
-      DataSourceStore.addChangeHandler(this._updateSelected);
+      ChartMetricsStore.addChangeHandler(this._updateSelected);
     },
 
     componentWillUnmount: function(){
-      DataSourceStore.removeChangeHandler(this._updateSelected);
+      ChartMetricsStore.removeChangeHandler(this._updateSelected);
+    },
+
+    changeChartName: function(e){
+      this.setState({ chartName: e.target.value });
     },
 
     _updateSelected: function(){
-      this.setState({ selected : ChartMetricsStore.selectedName() });
+      this.setState({
+        selected : ChartMetricsStore.selectedName(),
+        chartName: ChartMetricsStore.selectedName()
+      });
     },
 
     handleChange: function(e){
-      switch(e.target.value){
-        case "":
-          this.setState({ uploadingFile: false });
-          break;
-        case "newData":
-          this.setState({ uploadingFile: true });
-          break;
-        default:
-          DataSourceActions.setSelected(e.target.value);
-          this.setState({ uploadingFile: false });
-          break;
-      }
-
+      ChartMetricsActions.resetByName(e.target.value);
     },
 
-    handleUpload: function(e){
-      e.preventDefault();
+    saveMetrics: function(){
+      var dataId = DataSourceStore.selectedId();
+      if(!dataId || !this.state.chartName){ return; }
 
-      cloudinary.openUploadWidget(CLOUDINARY_OPTIONS, function(error, result) {
-        result = result[0];
-        DataSourceActions.create({
-          name: result.original_filename,
-          url: result.secure_url
-        });
+      var data = {};
+      data.metrics = JSON.stringify(ChartMetricsStore.all());
+      data.data_id = dataId;
+      data.name = this.state.chartName;
+      data.chart_type = this.props.chartType;
+      ChartMetricsActions.save(data);
+    },
 
-      });
+    createButton: function(){
+      var dataSourceId = DataSourceStore.selectedId();
+      var chartMetricId = ChartMetricsStore.selectedId();
 
-      this.setState({ uploadingFile: false });
+      if(!dataSourceId){
+        return(
+          <span></span>
+        );
+      } else if(chartMetricId){
+        return (
+          <button onClick={this.editMetrics}>Edit Chart</button>
+        );
+      } else {
+        return (
+          <button onClick={this.saveMetrics}>Save Chart</button>
+        );
+      }
     },
 
     render: function(){
-      var dataOptions = [<option value="" key={-2}></option>];
+      var dataOptions = [<option value="" key={-2}>New Chart</option>];
 
-      DataSourceStore.allNames().map(function(name, i){
+      ChartMetricsStore.userMetrics().map(function(metric, i){
         dataOptions.push(
-          <option value={name} key={i} >{name.toUpperCase()}</option>
+          <option value={metric.name} key={i} >{metric.name.toUpperCase()}</option>
         );
       });
 
-      //add new data-source option
-      dataOptions.push(
-        <option value="newData" key={-1}>Upload New Data Source</option>
-      );
-
       return(
-        <div className="data-uploader data-manager-panel">
-          <header>Data Source</header>
-          {
-            this.state.selected ? <div></div> : <div></div>
-          }
-          <select onChange={this.handleChange} value={this.state.selected}>{dataOptions}</select>
-          {
-            this.state.uploadingFile ?
-              <input type="file" onClick={this.handleUpload}/> : ""
-          }
+        <div className="data-manager-panel chart-metric-button">
+          <header>Chart Source</header>
+          <label>
+            Select A Chart:
+            <select onChange={this.handleChange} value={this.state.selected}>{dataOptions}</select>
+          </label>
+          <br/>
+          <label>
+            Chart Name: <input type="text" value={this.state.chartName} onChange={this.changeChartName}/>
+          </label>
+          {this.createButton()}
         </div>
       );
     }

@@ -21,10 +21,19 @@ var ChartMetricsActions = {
     ApiUtil.createChartMetric(data);
   },
 
+  //poor naming. only changes metrics.metrics
   reset: function(metrics){
     AppDispatcher.dispatch({
       actionType: ChartMetricsConstants.RESET,
       payload: metrics
+    });
+  },
+
+  //while this resets the entire _metrics object
+  resetByName: function(name){
+    AppDispatcher.dispatch({
+      actionType: ChartMetricsConstants.RESETBYNAME,
+      payload: name
     });
   },
 

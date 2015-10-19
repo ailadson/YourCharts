@@ -16,8 +16,8 @@
 
       var metrics = $.extend({}, {
         data: {
-          Group_By: "age",
-          Attribute: "population"
+          Group_By: "",
+          Attribute: ""
         },
 
         display: {
