@@ -20,6 +20,7 @@ gem "d3-rails"
 gem 'bcrypt'
 gem 'cloudinary'
 gem 'figaro'
+gem 'heroku'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
