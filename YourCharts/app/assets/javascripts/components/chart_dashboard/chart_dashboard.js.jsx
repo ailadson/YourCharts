@@ -48,12 +48,17 @@
       this.setState({chartType: type, metrics: ChartMetricsStore.all() });
     },
 
+    setChartType: function(type){
+      this.state.chartType = type;
+    },
+
     render: function(){
 
       return(
         <div className="chart-dashboard">
           <Components.DataManager metrics={this.state.metrics}
                                   chartType={this.state.chartType}
+                                  setChartType={this.setChartType}
                                   onChartTypeClick={this.handleChartTypeChange}/>
 
                                 <Components.ChartViewer data={this.state.dataSource}

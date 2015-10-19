@@ -33,7 +33,13 @@
     },
 
     handleChange: function(e){
-      ChartMetricsActions.resetByName(e.target.value);
+      var metric = ChartMetricsStore.getMetricByName(e.target.value);
+      var savedChartData = {};
+      savedChartData.metric = metric.name;
+      savedChartData.data = metric.data_id;
+      this.props.setChartType(metric.chart_type);
+      // savedChartData.type = metric.chart_type;
+      SavedChartActions.setActiveChart(savedChartData);
     },
 
     saveMetrics: function(){

@@ -11,7 +11,8 @@
       return(
         <div className="data-manager">
           <Components.DataSourceLoader />
-          <Components.ChartSourceLoader chartType={this.props.chartType}/>
+          <Components.ChartSourceLoader setChartType={this.props.setChartType}
+                                        chartType={this.props.chartType}/>
           <Components.ChartTypes onClick={this.props.onChartTypeClick} />
           <Components.ChartMetrics metrics={this.props.metrics} />
         </div>

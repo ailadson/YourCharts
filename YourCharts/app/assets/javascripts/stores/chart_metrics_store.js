@@ -25,7 +25,6 @@
 
     chosenMetric = chosenMetric || { metrics:{} };
     _metrics = chosenMetric;
-    debugger;
     ChartMetricsStore.emit(CHANGE);
   };
 
@@ -83,7 +82,6 @@
   var addCreatedMetric = function(metric){
     _userMetrics.push(metric);
     _metrics = metric;
-    debugger;
     ChartMetricsStore.emit(CHANGE);
   };
 
@@ -101,6 +99,12 @@
         }
       }
       return copy;
+    },
+
+    getMetricByName: function(name){
+      return _userMetrics.find(function(metric){
+        return metric.name === name;
+      });
     },
 
     get: function(metric){
@@ -170,9 +174,9 @@
         case ChartMetricsConstants.RESET:
           resetMetricsData(action.payload);
           break;
-        case ChartMetricsConstants.RESETBYNAME:
-          resetMetricsByName(action.payload);
-          break;
+        // case ChartMetricsConstants.RESETBYNAME:
+        //   resetMetricsByName(action.payload);
+        //   break;
         case ChartMetricsConstants.PROCESSCREATED:
           parseMetric(action.payload);
           addCreatedMetric(action.payload);
