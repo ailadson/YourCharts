@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
 
   has_many :data_sources
   has_many :metrics, through: :data_sources, source: :metrics
+  has_many :tables, through: :data_sources, source: :tables
 
   attr_reader :password
 

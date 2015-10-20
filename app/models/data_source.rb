@@ -7,7 +7,7 @@
 #  url         :string           not null
 #  description :text
 #  user_id     :integer          not null
-#  public      :boolean          default(FALSE)
+#  processed   :boolean          default(FALSE)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
@@ -17,4 +17,5 @@ class DataSource < ActiveRecord::Base
 
   belongs_to :user
   has_many :metrics, class_name: "ChartMetric", foreign_key: :data_id
+  has_many :tables, class_name: "DataTables", foreign_key: :data_id
 end

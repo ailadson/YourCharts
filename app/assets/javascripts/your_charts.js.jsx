@@ -64,6 +64,7 @@ $(function(){
     <Route path="/" component={App}>
       <IndexRoute components={{Header: AppNavBar, Content: Components.ChartDashboard}}/>
       <Route path="profile"  components={{Header: AppNavBar, Content: Components.Profile}}/>
+      <Route path="query" components={{Header: AppNavBar, Content: Components.QueryDashboard}}/>
     </Route>
   );
 

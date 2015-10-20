@@ -60,5 +60,11 @@ var ApiUtil = {
     $.get('api/chart_metrics', {}, function(metrics){
       ChartMetricsActions.populate(metrics);
     });
+  },
+
+  createDataTable: function(data){
+    $.post('api/data_tables', data, function(dataTable){
+      DataTableActions.processCreated(dataTable);
+    });
   }
 };

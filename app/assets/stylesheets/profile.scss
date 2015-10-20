@@ -33,3 +33,93 @@
   background-color: #555;
   float: right;
 }
+
+.query-interface{
+  background-color: #fff;
+  width: 95%;
+  padding: 10px;
+  margin: 10px auto;
+  box-shadow: 0 0 15px #000;
+  border-radius: 3px;
+}
+
+.query-description{
+  width: 90%;
+  border: 1px solid black;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+.query-processes{
+}
+
+h2{
+  text-align: center;
+}
+
+.not-processed{
+  float: left;
+  width: 45%;
+}
+
+.not-processed ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.not-processed li{
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.not-processed li:hover{
+  box-shadow: 0 2px 5px #000;
+  transform: translateY(-2px);
+}
+
+.processed{
+  float: right;
+  width: 45%;
+}
+
+.processed ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.processed li{
+  padding: 5px 0;
+  cursor: pointer;
+  transition: .25s transform, .25s box-shadow;
+}
+
+.processed li:hover{
+  box-shadow: 0 2px 5px #000;
+  transform: translateY(-2px);
+}
+
+.query-confirmation-list{
+  width: 70%;
+  margin:auto;
+  text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+
+.query-process-submit{
+  width: 150px;
+  margin: 15px auto;
+  display: block;
+}

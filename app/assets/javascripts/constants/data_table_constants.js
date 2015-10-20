@@ -1,0 +1,3 @@
+DataTableConstants = {
+  PROCESSCREATED: "datatablePROCESSCREATED"
+};

@@ -7,6 +7,7 @@
   'use strict';
 
   var CHANGE = "CHANGE";
+  var PROCESSED = "PROCESSED";
 
   var _dataSources = [];
   var _selectedDataSource = null;
@@ -64,6 +65,15 @@
     DataSourceStore.emit(CHANGE);
   };
 
+  var updateProcessed = function(id){
+    var processedSource = _dataSources.find(function(source){
+      return source.id === id;
+    });
+
+    processedSource.processed = true;
+    DataSourceStore.emit(PROCESSED);
+  };
+
   var DataSourceStore = window.DataSourceStore = $.extend({}, EventEmitter.prototype, {
     selectedName: function(){
       return (_selectedDataSource && _selectedDataSource.name) || "";
@@ -109,6 +119,18 @@
       return _dataSources.map(function(source){ return source.name; });
     },
 
+    processedDataSources: function(){
+      return _dataSources.filter(function(source){
+        return source.processed;
+      });
+    },
+
+    unprocessedDataSources: function(){
+      return _dataSources.filter(function(source){
+        return !source.processed;
+      });
+    },
+
     guessType: function(val){
       var floated = parseFloat(val);
 
@@ -126,6 +148,14 @@
 
     removeChangeHandler: function(cb){
       this.removeListener(CHANGE, cb);
+    },
+
+    addProcessedHandler: function(cb){
+      this.on(PROCESSED, cb);
+    },
+
+    removeProcessedHandler: function(cb){
+      this.removeListener(PROCESSED, cb);
     },
 
     dispatchId: AppDispatcher.register(function(action){
@@ -147,6 +177,9 @@
         case DataSourceConstants.POPULATE:
           parseData(action.payload);
           reset(action.payload);
+          break;
+        case DataTableConstants.PROCESSCREATED:
+          updateProcessed(action.payload.data_id);
           break;
       }
     })

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016172236) do
+ActiveRecord::Schema.define(version: 20151019182309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,12 +32,21 @@ ActiveRecord::Schema.define(version: 20151016172236) do
     t.string   "url",                         null: false
     t.text     "description"
     t.integer  "user_id",                     null: false
-    t.boolean  "public",      default: false
+    t.boolean  "processed",   default: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
 
   add_index "data_sources", ["user_id"], name: "index_data_sources_on_user_id", using: :btree
+
+  create_table "data_tables", force: :cascade do |t|
+    t.string   "table_name", null: false
+    t.integer  "data_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "data_tables", ["data_id"], name: "index_data_tables_on_data_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",                        null: false
