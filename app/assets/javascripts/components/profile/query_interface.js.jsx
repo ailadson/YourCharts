@@ -5,6 +5,8 @@
   window.Components.ProfileContent = window.Components.ProfileContent || {};
 
   window.Components.ProfileContent.QueryInterface = React.createClass({
+    mixins: [ReactRouter.History],
+
     getInitialState: function(){
       return { confirming: false, source: null, processing: false };
     },
@@ -25,6 +27,12 @@
       this.setState({
         confirming: true,
         source: source
+      });
+    },
+
+    goToQueryDashboard: function(source){
+      this.history.pushState(null, '/query', {
+        source: source.id,
       });
     },
 
@@ -68,8 +76,12 @@
         <ul>
           {
             unprocessed.map(function(source, i){
-              return <li key={i}>{source.name}</li>;
-            })
+              return(
+                <li key={i} onClick={this.goToQueryDashboard.bind(null, source)}>
+                  {source.name}
+                </li>
+              );
+            }.bind(this))
           }
         </ul>
       );

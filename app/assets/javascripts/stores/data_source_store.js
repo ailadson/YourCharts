@@ -115,6 +115,26 @@
       return measures;
     },
 
+    getMeasuresById: function(id){
+      var source = _dataSources.find(function(source){
+        return source.id === id;
+      });
+
+      var measures = [];
+
+      if(source){
+        var sample = source.data[0];
+
+        for(var key in sample){
+          if(sample.hasOwnProperty(key)){
+            measures.push(key);
+          }
+        }
+      }
+
+      return measures;
+    },
+
     allNames: function(){
       return _dataSources.map(function(source){ return source.name; });
     },
