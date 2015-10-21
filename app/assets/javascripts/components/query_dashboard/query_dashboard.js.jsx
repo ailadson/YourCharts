@@ -10,7 +10,8 @@
     getInitialState: function(){
       return {
         from: QueryStore.getFrom(),
-        joins: QueryStore.getJoins()
+        joins: QueryStore.getJoins(),
+        selections: QueryStore.getSelections()
       };
     },
 
@@ -30,7 +31,8 @@
     updateState: function(){
       this.setState({
         from: QueryStore.getFrom(),
-        joins: QueryStore.getJoins()
+        joins: QueryStore.getJoins(),
+        selections: QueryStore.getSelections()
       });
     },
 
@@ -38,6 +40,7 @@
       return(
         <div className="query-dashboard">
             <Components.QuerySources query={this.state} />
+            <Components.QuerySelections query={this.state} />
         </div>
       );
     }

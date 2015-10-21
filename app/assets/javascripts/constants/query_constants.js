@@ -1,5 +1,7 @@
 var QueryConstants = {
   SETFROM: "querycontantsSETFROM",
   ADDJOIN: "queryconstantsADDJOIN",
-  UPDATEJOIN: "queryconstantsUPDATEJOIN"
+  UPDATEJOIN: "queryconstantsUPDATEJOIN",
+  ADDSELECTION: "queryconstantsADDSELECTION",
+  UPDATESELECTION: "queryconstantsUPDATESELECTION"
 };

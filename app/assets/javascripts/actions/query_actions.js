@@ -17,5 +17,18 @@ var QueryActions = {
       actionType: QueryConstants.UPDATEJOIN,
       payload: data
     });
+  },
+
+  addSelection: function(){
+    AppDispatcher.dispatch({
+      actionType: QueryConstants.ADDSELECTION
+    });
+  },
+
+  updateSelection: function(data){
+    AppDispatcher.dispatch({
+      actionType: QueryConstants.UPDATESELECTION,
+      payload: data
+    });
   }
 };
