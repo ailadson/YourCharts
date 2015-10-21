@@ -19,6 +19,19 @@
   float: right;
 }
 
+.chart-viewer-idle{
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  font-size: 2.5em;
+}
+
+.chart-viewer-idle div{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .chart{
   margin: auto;
   position: relative;

@@ -1,12 +1,13 @@
 .product-preview{
+  position: relative;
   height: 100%;
   width: 100%;
   background-color: #000;
-  background-image: url("/imgs/preview-background.jpg");
+  background-image: url("/imgs/data-viz.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  margin-top: -2.4%;
+  margin-top: -50px;
 }
 
 .login-section{
@@ -68,7 +69,7 @@
   position: relative;
   top: 20%;
   color: #fff;
-  font-size: 3em;
-  text-shadow: 1px 1px 2px;
+  font-size: 4.5em;
+  text-shadow: 1px 1px 5px #000;
   text-align: center;
 }

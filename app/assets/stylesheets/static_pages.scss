@@ -6,6 +6,8 @@ html, body, #app, .main{
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
 }
 
 .main nav{
@@ -14,6 +16,7 @@ html, body, #app, .main{
 }
 
 .main-content{
+  top: 100px;
   height: 95%;
 }
 
@@ -23,16 +26,19 @@ html, body, #app, .main{
 }
 
 .nav-bar{
-  background-color: #F0FFFF;
+  background-image: url('/imgs/header-background.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
 }
 
-.nav-bar div{
+.nav-bar .logo{
   width: 50%;
   text-align: center;
-  font-size: 1.25em;
+  font-size: 1.8em;
   position: relative;
-  color: #000;
-  text-shadow: 1px 1px 15px #fff;
+  color: #fff;
+  text-shadow: 1px 1px 3px #000;
   top: 50%;
   transform: translateY(-50%);
   float:left;
@@ -45,17 +51,30 @@ html, body, #app, .main{
   padding: 0;
   margin: 0;
   cursor: pointer;
+  color: #000;
+  font-size: 1.15em;
 }
 
 .nav-logged-in ul li{
   float: left;
   height: 100%;
-  border-left: 1px solid black;
   padding: 0 10px;
+  transition: .2s transform, .2s box-shadow
+}
+
+.nav-logged-in ul li:last-child{
+  margin-right: 30px;
 }
 
 .nav-logged-in ul li:hover{
-  background-color:  #F0F0F0;
+  box-shadow: 0 0 5px #000;
+  transform: translateY(-1px);
+}
+
+.nav-logged-in div{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .group:after{

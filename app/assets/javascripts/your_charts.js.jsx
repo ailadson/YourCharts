@@ -15,6 +15,10 @@ $(function(){
       this.props.history.pushState(null, '/');
     },
 
+    goToQueryDashboard: function(){
+      this.props.history.pushState(null, '/query');
+    },
+
     signOut: function(){
       $.ajax({
         url: "/session",
@@ -28,11 +32,28 @@ $(function(){
     render: function(){
       return(
         <nav className="nav-bar nav-logged-in group">
-          <div>Your Charts</div>
+          <div className="logo">Chartful</div>
           <ul className="group">
-            <li onClick={this.goToProfile}>Profile</li>
-            <li onClick={this.goToChartDashboard}>Upload Data</li>
-            <li onClick={this.signOut}>Sign Out</li>
+            <li onClick={this.goToChartDashboard}>
+              <div>
+                Chart Dashboard
+              </div>
+            </li>
+            <li onClick={this.goToQueryDashboard}>
+              <div>
+                Query Dashboard
+              </div>
+            </li>
+            <li onClick={this.goToProfile}>
+              <div>
+                Profile
+              </div>
+            </li>
+            <li onClick={this.signOut}>
+              <div>
+                Sign Out
+              </div>
+            </li>
           </ul>
           </nav>
       );
@@ -42,7 +63,7 @@ $(function(){
   var GuestNavBar = React.createClass({
     render: function(){
       return(
-        <nav className="nav-bar"><div>Your Charts</div></nav>
+        <nav className="nav-bar"><div className="logo">Chartful</div></nav>
       );
     }
   });

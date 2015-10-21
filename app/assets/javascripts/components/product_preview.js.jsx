@@ -64,7 +64,7 @@
       return(
         <div className="product-preview">
           <div className="main-preview">
-            <h1>See Your Data (ugh)</h1>
+            <h1>Visualize Your Data</h1>
           </div>
           <div className="login-section">
 
@@ -92,7 +92,6 @@
               <br/>
               <br/>
               <button onClick={this.showSignup}>Not A Member? Sign Up</button>
-              <br/>
               <br/>
               <button onClick={this.demoLogin}>No time? Login as Demo User</button>
             </form>

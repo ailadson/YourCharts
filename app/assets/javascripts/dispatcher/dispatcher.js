@@ -1,3 +1,3 @@
 /* global FluxDispatcher */
 
-var AppDispatcher = new FluxDispatcher();
+var AppDispatcher = new Flux.Dispatcher();

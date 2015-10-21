@@ -48,7 +48,11 @@
 
       if(!this.props.data){
         return(
-          <div>Please Select A Data Source</div>
+          <div className="chart-viewer chart-viewer-idle">
+            <div>
+              Please Select A Data Source
+            </div>
+          </div>
         );
       }
 
