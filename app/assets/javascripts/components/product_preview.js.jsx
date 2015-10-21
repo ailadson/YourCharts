@@ -7,8 +7,20 @@
 
   window.Components.PoductPreview = React.createClass({
     getInitialState: function(){
-      return { username: "", password: "", passwordConfirm: "", badPassword: false };
+      return {
+        username: "",
+        password: "",
+        passwordConfirm: "",
+        badPassword: false
+      };
     },
+
+    demoLogin: function(e){
+      e.preventDefault();
+      this.setState({ username: "demo", password: "password" });
+    },
+
+
 
     showLogin: function(e){
       var login = React.findDOMNode(this.refs.login);
@@ -80,6 +92,9 @@
               <br/>
               <br/>
               <button onClick={this.showSignup}>Not A Member? Sign Up</button>
+              <br/>
+              <br/>
+              <button onClick={this.demoLogin}>No time? Login as Demo User</button>
             </form>
 
             <form className="login-form" action="/users" method="POST" onSubmit={this.signup} ref="signup">
