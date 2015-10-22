@@ -8,5 +8,7 @@ Rails.application.routes.draw do
     resources :data_sources, only: [:index, :create, :update, :destroy]
     resources :chart_metrics, only: [:index, :create, :update, :destroy]
     resources :data_tables, only: [:create]
+    post 'query', to: 'data_tables#query'
   end
+
 end

@@ -8,7 +8,7 @@
 
   window.Components.QuerySources = React.createClass({
     changeFrom: function(e){
-      QueryActions.setFrom(e.target.value);
+      QueryActions.setFrom(DataSourceStore.findById(parseInt(e.target.value)));
     },
 
     updateJoins: function(e){
@@ -60,7 +60,7 @@
 
             Join:<br/>
           <select name={i} value={join.dataId} onChange={this.updateJoins}>
-              <option></option>
+              <option key={-1}></option>
               { this.processedOptions("id", "name")}
             </select>
             <br/>
@@ -94,6 +94,7 @@
             <select name="from"
                     onChange={this.changeFrom}
                     value={(query.from && query.from.id)}>
+              <option key={-1}></option>
               {this.processedOptions("id", "name")}
             </select>
           </div>

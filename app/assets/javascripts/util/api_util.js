@@ -66,5 +66,12 @@ var ApiUtil = {
     $.post('api/data_tables', data, function(dataTable){
       DataTableActions.processCreated(dataTable);
     });
+  },
+
+  runQuery: function(data){
+    console.log(data);
+    // $.post('query', { query: data }, function(dataSource){
+    //   console.log(dataSource);
+    // });
   }
 };

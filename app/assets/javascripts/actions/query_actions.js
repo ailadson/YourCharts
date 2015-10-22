@@ -30,5 +30,9 @@ var QueryActions = {
       actionType: QueryConstants.UPDATESELECTION,
       payload: data
     });
+  },
+
+  runQuery: function(query){
+    ApiUtil.runQuery(query);
   }
 };

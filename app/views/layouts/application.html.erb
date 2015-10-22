@@ -9,7 +9,9 @@
   <script>
     window.CLOUDINARY_OPTIONS = {
       cloud_name: "<%= ENV['cloud_name'] %>",
-      upload_preset: "<%= ENV['upload_preset'] %>"
+      upload_preset: "<%= ENV['upload_preset'] %>",
+      sources: ['local'],
+      client_allowed_formats: ['tsv', 'json', 'csv']
     };
   </script>
   <script src="https://widget.cloudinary.com/global/all.js" type="text/javascript" charset="utf-8"></script>

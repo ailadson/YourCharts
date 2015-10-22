@@ -52,6 +52,14 @@
   };
 
   var QueryStore = window.QueryStore = $.extend({}, EventEmitter.prototype, {
+    getQuery: function(){
+      return {
+        from: _from.name,
+        joins: _joins,
+        selections: _selections
+      };
+    },
+
     getFrom: function(){
       return _from;
     },
