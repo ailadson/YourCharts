@@ -24,6 +24,7 @@
 
   var addSelection = function(){
     _selections.push({
+      dataId: null,
       name: null,
       column: null,
       as: null
@@ -54,7 +55,7 @@
   var QueryStore = window.QueryStore = $.extend({}, EventEmitter.prototype, {
     getQuery: function(){
       return {
-        from: _from.name,
+        from: _from.id,
         joins: _joins,
         selections: _selections
       };

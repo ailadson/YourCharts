@@ -43,14 +43,21 @@ var ApiUtil = {
       var sourcesFetched = 0;
 
       dataSources.forEach(function(dataSource){
-        $.get(dataSource.url, {}, function(file){
-          sourcesFetched += 1;
-          dataSource.data = file;
+        if(dataSource.url){
+          $.get(dataSource.url, {}, function(file){
+            sourcesFetched += 1;
+            dataSource.data = file;
 
+            if(sourcesFetched === dataSources.length){
+              DataSourceActions.populate(dataSources);
+            }
+          });
+        } else{
+          sourcesFetched += 1;
           if(sourcesFetched === dataSources.length){
             DataSourceActions.populate(dataSources);
           }
-        });
+        }
       });
 
     });
@@ -69,9 +76,8 @@ var ApiUtil = {
   },
 
   runQuery: function(data){
-    console.log(data);
-    // $.post('query', { query: data }, function(dataSource){
-    //   console.log(dataSource);
-    // });
+    $.post('api/query', { query: data }, function(dataSource){
+      console.log(dataSource);
+    });
   }
 };

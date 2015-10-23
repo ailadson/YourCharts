@@ -43,7 +43,9 @@
     },
 
     runQuery: function(){
+      var name = React.findDOMNode(this.refs.name).value;
       var query = QueryStore.getQuery();
+      query.name = name;
       QueryActions.runQuery(query);
     },
 
@@ -53,6 +55,7 @@
             <Components.QuerySources query={this.state} />
             <Components.QuerySelections query={this.state} />
             <div className="query-run-button">
+              Name:<input type="text" ref="name"/>
               <button onClick={this.runQuery}>Run Query</button>
             </div>
         </div>

@@ -19,18 +19,20 @@
   };
 
   var parseDatum = function(dataSource){
-    var extension = dataSource.url.split('.').pop().toLowerCase();
+    if(dataSource.url){
+      var extension = dataSource.url.split('.').pop().toLowerCase();
 
-    switch(extension){
-      case "csv":
-        dataSource.data = d3.csv.parse(dataSource.data);
-        break;
-      // case "json":
-      //   dataSource.data = JSON.parse(dataSource.data);
-      //   break;
-      case "tsv":
-        dataSource.data = d3.tsv.parse(dataSource.data);
-        break;
+      switch(extension){
+        case "csv":
+          dataSource.data = d3.csv.parse(dataSource.data);
+          break;
+        case "tsv":
+          dataSource.data = d3.tsv.parse(dataSource.data);
+          break;
+      }
+
+    } else {
+      dataSource.data = JSON.parse(dataSource.data);
     }
 
     dataSource.data.forEach(function(dataS){

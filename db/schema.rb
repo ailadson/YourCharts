@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019182309) do
+ActiveRecord::Schema.define(version: 20151022221324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,12 +29,13 @@ ActiveRecord::Schema.define(version: 20151019182309) do
 
   create_table "data_sources", force: :cascade do |t|
     t.string   "name",                        null: false
-    t.string   "url",                         null: false
+    t.string   "url"
     t.text     "description"
     t.integer  "user_id",                     null: false
     t.boolean  "processed",   default: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.text     "data"
   end
 
   add_index "data_sources", ["user_id"], name: "index_data_sources_on_user_id", using: :btree
@@ -47,6 +48,32 @@ ActiveRecord::Schema.define(version: 20151019182309) do
   end
 
   add_index "data_tables", ["data_id"], name: "index_data_tables_on_data_id", using: :btree
+
+  create_table "demo__sepal_petal_data", force: :cascade do |t|
+    t.float  "sepalLength"
+    t.float  "sepalWidth"
+    t.float  "petalLength"
+    t.float  "petalWidth"
+    t.string "species"
+  end
+
+  create_table "demo_user__age_population_data", force: :cascade do |t|
+    t.string  "age"
+    t.integer "population"
+  end
+
+  create_table "demo_user__age_population_data2", force: :cascade do |t|
+    t.string  "age"
+    t.integer "population"
+  end
+
+  create_table "demo_user__sepal_petal_data", force: :cascade do |t|
+    t.float  "sepalLength"
+    t.float  "sepalWidth"
+    t.float  "petalLength"
+    t.float  "petalWidth"
+    t.string "species"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "username",                        null: false

@@ -15,7 +15,8 @@
         idx: parseInt(e.target.name),
         selection: {
           column: data[1],
-          name: data[0]
+          name: data[0],
+          dataId: DataSourceStore.find(data[0]).id
         }
       });
     },

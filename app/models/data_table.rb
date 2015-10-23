@@ -16,7 +16,7 @@ class DataTable < ActiveRecord::Base
 
   def create_rdb(source, schema)
     table_prefix = source.user.username
-    table_suffix = source.name.gsub(' ', '_').downcase.to_sym
+    table_suffix = SecureRandom.hex(32)
 
     self.table_name = "#{table_prefix}__#{table_suffix}"
     self.data_id = source.id
@@ -41,7 +41,7 @@ class TableCreator < ActiveRecord::Migration
 
   def makeColumns(table, schema)
     schema.each do |col_name, col_type|
-      add_column table, col_name, col_type
+      add_column table, col_name.underscore, col_type
     end
   end
 end
